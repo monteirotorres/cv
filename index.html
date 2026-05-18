@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,17 +11,42 @@
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+        /* ===== LIGHT MODE ===== */
         :root {
-            --primary: #1a2e4a;
-            --accent: #2471a3;
-            --accent-light: #d6eaf8;
-            --accent-hover: #1a5276;
-            --text: #2c3e50;
-            --text-light: #6c7a89;
-            --border: #e5eaf0;
-            --bg: #eef2f7;
-            --card: #ffffff;
-            --timeline-dot: #2471a3;
+            --primary:       #1c3208;
+            --accent:        #4d7c10;
+            --accent-vivid:  #7eb52a;
+            --accent-light:  #e8f2d0;
+            --text:          #222e0e;
+            --text-light:    #566830;
+            --border:        #c8d898;
+            --bg:            #f1f6e6;
+            --card:          #ffffff;
+            --header-from:   #1a2e08;
+            --header-to:     #4e8018;
+            --shadow:        rgba(28, 50, 8, 0.13);
+            --tab-bg:        #ffffff;
+            --toggle-bg:     #4d7c10;
+            --toggle-color:  #ffffff;
+        }
+
+        /* ===== DARK MODE ===== */
+        [data-theme="dark"] {
+            --primary:       #c6e060;
+            --accent:        #99cc28;
+            --accent-vivid:  #99cc28;
+            --accent-light:  #1c2c08;
+            --text:          #d4e6a8;
+            --text-light:    #869e50;
+            --border:        #2c3e14;
+            --bg:            #111808;
+            --card:          #1a2210;
+            --header-from:   #0a1204;
+            --header-to:     #1c2e08;
+            --shadow:        rgba(0, 0, 0, 0.45);
+            --tab-bg:        #1a2210;
+            --toggle-bg:     #c6e060;
+            --toggle-color:  #111808;
         }
 
         body {
@@ -32,17 +57,38 @@
             margin: 0;
             padding: 30px 20px;
             min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
         }
 
-        /* Language toggle */
-        .language-flags {
+        /* ===== CONTROLS (flags + theme toggle) ===== */
+        .controls {
             position: fixed;
             top: 20px;
             right: 20px;
             display: flex;
+            align-items: center;
             gap: 8px;
             z-index: 1000;
         }
+
+        .theme-toggle {
+            width: 38px;
+            height: 26px;
+            background: var(--toggle-bg);
+            color: var(--toggle-color);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.82em;
+            box-shadow: 0 2px 8px var(--shadow);
+            transition: background 0.3s, color 0.3s, transform 0.2s;
+            flex-shrink: 0;
+        }
+
+        .theme-toggle:hover { transform: scale(1.1); }
 
         .language-flag {
             width: 38px;
@@ -50,64 +96,62 @@
             cursor: pointer;
             border-radius: 5px;
             border: 2px solid transparent;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+            box-shadow: 0 2px 8px var(--shadow);
             object-fit: cover;
-            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+            transition: transform 0.2s, border-color 0.2s;
         }
 
-        .language-flag:hover { transform: scale(1.12); }
+        .language-flag:hover { transform: scale(1.1); }
         .language-flag.active {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(36,113,163,0.3);
+            border-color: var(--accent-vivid);
+            box-shadow: 0 0 0 3px rgba(126,181,42,0.35);
         }
 
-        /* Main container */
+        /* ===== CONTAINER ===== */
         .container {
             max-width: 880px;
             margin: 0 auto;
             background: var(--card);
             border-radius: 18px;
             overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.13);
+            box-shadow: 0 8px 32px var(--shadow);
+            transition: background 0.3s, box-shadow 0.3s;
         }
 
         .cv-language-content { display: none; }
         .cv-language-content.active { display: block; }
 
-        /* Header */
+        /* ===== HEADER ===== */
         .header {
-            background: linear-gradient(135deg, #1a2e4a 0%, #2471a3 100%);
+            background: linear-gradient(135deg, var(--header-from) 0%, var(--header-to) 100%);
             padding: 44px 44px 40px;
-            color: white;
+            color: #fff;
             display: flex;
             align-items: center;
             gap: 32px;
             position: relative;
             overflow: hidden;
+            transition: background 0.3s;
         }
 
         .header::after {
             content: '';
             position: absolute;
-            top: -60px;
-            right: -60px;
-            width: 320px;
-            height: 320px;
+            top: -60px; right: -60px;
+            width: 300px; height: 300px;
             background: rgba(255,255,255,0.05);
             border-radius: 50%;
             pointer-events: none;
         }
 
         .profile-pic {
-            width: 130px;
-            height: 130px;
+            width: 130px; height: 130px;
             border-radius: 50%;
             object-fit: cover;
-            border: 4px solid rgba(255,255,255,0.85);
+            border: 4px solid rgba(255,255,255,0.82);
             box-shadow: 0 6px 24px rgba(0,0,0,0.35);
             flex-shrink: 0;
-            position: relative;
-            z-index: 1;
+            position: relative; z-index: 1;
         }
 
         .header-info { position: relative; z-index: 1; }
@@ -124,18 +168,16 @@
             font-size: 1em;
             font-weight: 400;
             opacity: 0.82;
-            letter-spacing: 0.2px;
         }
 
-        /* Navigation */
+        /* ===== NAVIGATION ===== */
         .tabs {
             display: flex;
-            background: #fff;
+            background: var(--tab-bg);
             border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            position: sticky; top: 0; z-index: 100;
+            box-shadow: 0 2px 8px var(--shadow);
+            transition: background 0.3s, border-color 0.3s;
         }
 
         .tab-button {
@@ -160,11 +202,11 @@
 
         .tab-button.active {
             color: var(--accent);
-            border-bottom-color: var(--accent);
+            border-bottom-color: var(--accent-vivid);
             font-weight: 600;
         }
 
-        /* Content area */
+        /* ===== CONTENT ===== */
         .tab-content {
             display: none;
             padding: 38px 44px;
@@ -188,6 +230,7 @@
             margin-bottom: 18px;
             padding-bottom: 10px;
             border-bottom: 2px solid var(--accent-light);
+            transition: color 0.3s, border-color 0.3s;
         }
 
         .section-gap { margin-top: 36px; }
@@ -195,9 +238,9 @@
         /* About */
         .about-text {
             font-size: 0.975em;
-            color: var(--text);
             line-height: 1.85;
             margin-bottom: 32px;
+            color: var(--text);
         }
 
         /* Awards */
@@ -209,18 +252,19 @@
             gap: 12px;
             padding: 13px 16px;
             margin-bottom: 9px;
-            background: var(--bg);
+            background: var(--accent-light);
             border-radius: 9px;
-            border-left: 3px solid var(--accent);
+            border-left: 3px solid var(--accent-vivid);
             font-size: 0.92em;
             line-height: 1.5;
+            transition: background 0.3s;
         }
 
         .awards-list li::before {
             content: '\f091';
             font-family: 'Font Awesome 6 Free';
             font-weight: 900;
-            color: var(--accent);
+            color: var(--accent-vivid);
             font-size: 0.85em;
             margin-top: 2px;
             flex-shrink: 0;
@@ -232,29 +276,23 @@
         .timeline::before {
             content: '';
             position: absolute;
-            left: 7px;
-            top: 8px;
-            bottom: 4px;
+            left: 7px; top: 8px; bottom: 4px;
             width: 2px;
             background: var(--border);
         }
 
-        .timeline-item {
-            position: relative;
-            margin-bottom: 26px;
-        }
+        .timeline-item { position: relative; margin-bottom: 26px; }
 
         .timeline-item::before {
             content: '';
             position: absolute;
-            left: -28px;
-            top: 5px;
-            width: 14px;
-            height: 14px;
+            left: -28px; top: 5px;
+            width: 14px; height: 14px;
             border-radius: 50%;
-            background: white;
-            border: 3px solid var(--timeline-dot);
-            box-shadow: 0 0 0 3px rgba(36,113,163,0.15);
+            background: var(--card);
+            border: 3px solid var(--accent-vivid);
+            box-shadow: 0 0 0 3px rgba(126,181,42,0.2);
+            transition: background 0.3s, border-color 0.3s;
         }
 
         .timeline-title {
@@ -262,6 +300,7 @@
             color: var(--primary);
             font-size: 0.95em;
             line-height: 1.4;
+            transition: color 0.3s;
         }
 
         .timeline-sub {
@@ -276,17 +315,17 @@
         .pub-item {
             padding: 14px 16px;
             margin-bottom: 9px;
-            background: var(--bg);
+            background: var(--accent-light);
             border-radius: 9px;
             font-size: 0.875em;
             line-height: 1.65;
             border: 1px solid var(--border);
-            transition: box-shadow 0.2s, border-color 0.2s;
+            transition: box-shadow 0.2s, border-color 0.2s, background 0.3s;
         }
 
         .pub-item:hover {
-            box-shadow: 0 3px 14px rgba(36,113,163,0.1);
-            border-color: #b2cde8;
+            box-shadow: 0 3px 14px var(--shadow);
+            border-color: var(--accent-vivid);
         }
 
         .pub-item a {
@@ -298,7 +337,7 @@
 
         .pub-item a:hover { text-decoration: underline; }
 
-        /* Contact grid */
+        /* Contact */
         .contact-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -310,7 +349,7 @@
             align-items: center;
             gap: 14px;
             padding: 18px 20px;
-            background: var(--bg);
+            background: var(--accent-light);
             border-radius: 11px;
             text-decoration: none;
             color: var(--text);
@@ -320,22 +359,22 @@
 
         .contact-card:hover {
             background: var(--accent-light);
-            border-color: var(--accent);
+            border-color: var(--accent-vivid);
             transform: translateY(-2px);
-            box-shadow: 0 5px 16px rgba(36,113,163,0.14);
+            box-shadow: 0 5px 16px var(--shadow);
         }
 
         .contact-icon {
-            width: 42px;
-            height: 42px;
+            width: 42px; height: 42px;
             background: var(--accent);
-            color: white;
+            color: #fff;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1em;
             flex-shrink: 0;
+            transition: background 0.3s;
         }
 
         .contact-label {
@@ -366,7 +405,10 @@
 </head>
 <body>
 
-    <div class="language-flags">
+    <div class="controls">
+        <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark/light mode">
+            <i class="fas fa-moon" id="theme-icon"></i>
+        </button>
         <img src="https://flagcdn.com/w40/br.png" class="language-flag" id="flag-pt" onclick="setLanguage('pt')" alt="Português">
         <img src="https://flagcdn.com/w40/us.png" class="language-flag" id="flag-en" onclick="setLanguage('en')" alt="English">
     </div>
@@ -390,11 +432,9 @@
                 <button class="tab-button" onclick="openTab(event, 'contato-pt')">Contato</button>
             </div>
 
-            <!-- Perfil PT -->
             <div id="perfil-pt" class="tab-content active">
                 <h3 class="section-title">Sobre</h3>
                 <p class="about-text">Pesquisador e professor com vasta experiência em Microbiologia, Bioquímica e Biofísica, atuando principalmente nas áreas de biologia estrutural computacional, desenho de fármacos e bioinformática. Atualmente Professor Adjunto no Instituto de Biofísica Carlos Chagas Filho (UFRJ).</p>
-
                 <h3 class="section-title">Prêmios e Títulos</h3>
                 <ul class="awards-list">
                     <li>Jovem Cientista do Nosso Estado, FAPERJ (2023)</li>
@@ -405,7 +445,6 @@
                 </ul>
             </div>
 
-            <!-- Formação PT -->
             <div id="formacao-pt" class="tab-content">
                 <h3 class="section-title">Formação Acadêmica</h3>
                 <div class="timeline">
@@ -422,7 +461,6 @@
                         <div class="timeline-sub">Universidade Federal do Rio de Janeiro (UFRJ) &nbsp;·&nbsp; 2008</div>
                     </div>
                 </div>
-
                 <h3 class="section-title section-gap">Experiência Profissional</h3>
                 <div class="timeline">
                     <div class="timeline-item">
@@ -444,7 +482,6 @@
                 </div>
             </div>
 
-            <!-- Publicações PT -->
             <div id="publicacoes-pt" class="tab-content">
                 <h3 class="section-title">Artigos em Periódicos</h3>
                 <ul class="pub-list">
@@ -477,13 +514,11 @@
                     <li class="pub-item">HOELZ, L.V.B. et al. (2013). G Protein-Coupled Receptors. <em>Revista Virtual de Química</em>.</li>
                     <li class="pub-item">TORRES, P.H.M. et al. (2011). Structural analysis of the N-terminal fragment of the antiangiogenic protein endostatin. <em>Proteins</em>. <a href="https://doi.org/10.1002/prot.23096" target="_blank">[DOI]</a></li>
                 </ul>
-
                 <h3 class="section-title section-gap">Capítulos de Livros</h3>
                 <ul class="pub-list">
                     <li class="pub-item">Waman, V.P. et al. (2020). The Genome3D Consortium for Structural Annotations of Selected Model Organisms. In: <em>Methods in Molecular Biology</em>. <a href="https://doi.org/10.1007/978-1-0716-0708-4_3" target="_blank">[DOI]</a></li>
                     <li class="pub-item">HOELZ, L.V.B. et al. (2015). G Protein-Coupled Receptors. In: <em>Compendium of Medicinal Chemistry</em>.</li>
                 </ul>
-
                 <h3 class="section-title section-gap">Resumos em Anais de Eventos</h3>
                 <ul class="pub-list">
                     <li class="pub-item">TORRES, P.H.M. et al. (2010). Conformational Analysis of an Antiangiogenic and Antitumor Endostatin-Derived Peptide. In: <em>II Encontro Anual do INBEB</em>.</li>
@@ -492,7 +527,6 @@
                 </ul>
             </div>
 
-            <!-- Contato PT -->
             <div id="contato-pt" class="tab-content">
                 <h3 class="section-title">Entre em Contato</h3>
                 <div class="contact-grid">
@@ -538,11 +572,9 @@
                 <button class="tab-button" onclick="openTab(event, 'contato-en')">Contact</button>
             </div>
 
-            <!-- Profile EN -->
             <div id="perfil-en" class="tab-content active">
                 <h3 class="section-title">About</h3>
                 <p class="about-text">Researcher and professor with extensive experience in Microbiology, Biochemistry and Biophysics, working mainly in the areas of computational structural biology, drug design and bioinformatics. Currently Associate Professor at the Carlos Chagas Filho Institute of Biophysics (UFRJ).</p>
-
                 <h3 class="section-title">Awards &amp; Honours</h3>
                 <ul class="awards-list">
                     <li>Young Scientist of Our State, FAPERJ (2023)</li>
@@ -553,7 +585,6 @@
                 </ul>
             </div>
 
-            <!-- Education EN -->
             <div id="formacao-en" class="tab-content">
                 <h3 class="section-title">Academic Background</h3>
                 <div class="timeline">
@@ -570,7 +601,6 @@
                         <div class="timeline-sub">Federal University of Rio de Janeiro (UFRJ) &nbsp;·&nbsp; 2008</div>
                     </div>
                 </div>
-
                 <h3 class="section-title section-gap">Professional Experience</h3>
                 <div class="timeline">
                     <div class="timeline-item">
@@ -592,7 +622,6 @@
                 </div>
             </div>
 
-            <!-- Publications EN -->
             <div id="publicacoes-en" class="tab-content">
                 <h3 class="section-title">Journal Articles</h3>
                 <ul class="pub-list">
@@ -625,13 +654,11 @@
                     <li class="pub-item">HOELZ, L.V.B. et al. (2013). G Protein-Coupled Receptors. <em>Revista Virtual de Química</em>.</li>
                     <li class="pub-item">TORRES, P.H.M. et al. (2011). Structural analysis of the N-terminal fragment of the antiangiogenic protein endostatin. <em>Proteins</em>. <a href="https://doi.org/10.1002/prot.23096" target="_blank">[DOI]</a></li>
                 </ul>
-
                 <h3 class="section-title section-gap">Book Chapters</h3>
                 <ul class="pub-list">
                     <li class="pub-item">Waman, V.P. et al. (2020). The Genome3D Consortium for Structural Annotations of Selected Model Organisms. In: <em>Methods in Molecular Biology</em>. <a href="https://doi.org/10.1007/978-1-0716-0708-4_3" target="_blank">[DOI]</a></li>
                     <li class="pub-item">HOELZ, L.V.B. et al. (2015). G Protein-Coupled Receptors. In: <em>Compendium of Medicinal Chemistry</em>.</li>
                 </ul>
-
                 <h3 class="section-title section-gap">Abstracts in Event Proceedings</h3>
                 <ul class="pub-list">
                     <li class="pub-item">TORRES, P.H.M. et al. (2010). Conformational Analysis of an Antiangiogenic and Antitumor Endostatin-Derived Peptide. In: <em>II INBEB Annual Meeting</em>.</li>
@@ -640,7 +667,6 @@
                 </ul>
             </div>
 
-            <!-- Contact EN -->
             <div id="contato-en" class="tab-content">
                 <h3 class="section-title">Get in Touch</h3>
                 <div class="contact-grid">
@@ -688,9 +714,29 @@
             document.getElementById('flag-' + lang).classList.add('active');
             document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en';
             document.querySelector('#cv-' + lang + ' .tab-button').click();
+            localStorage.setItem('cv-lang', lang);
         }
 
-        document.addEventListener('DOMContentLoaded', () => setLanguage('en'));
+        function toggleTheme() {
+            const html = document.documentElement;
+            const isDark = html.getAttribute('data-theme') === 'dark';
+            const newTheme = isDark ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            document.getElementById('theme-icon').className = isDark ? 'fas fa-moon' : 'fas fa-sun';
+            localStorage.setItem('cv-theme', newTheme);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Restore theme
+            const savedTheme = localStorage.getItem('cv-theme') ||
+                (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            document.getElementById('theme-icon').className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+
+            // Restore language
+            const savedLang = localStorage.getItem('cv-lang') || 'en';
+            setLanguage(savedLang);
+        });
     </script>
 </body>
 </html>
