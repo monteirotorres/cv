@@ -12,41 +12,44 @@
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         /* ===== LIGHT MODE ===== */
+        /* --accent-vivid: #b3b833 (the requested color, decorative use)
+           --accent: darker variant for text, contrast 5.1:1 on white       */
         :root {
-            --primary:       #1c3208;
-            --accent:        #4d7c10;
-            --accent-vivid:  #7eb52a;
-            --accent-light:  #e8f2d0;
-            --text:          #222e0e;
-            --text-light:    #566830;
-            --border:        #c8d898;
-            --bg:            #f1f6e6;
+            --primary:       #26280a;
+            --accent:        #6c7010;
+            --accent-vivid:  #b3b833;
+            --accent-light:  #f0f1cc;
+            --text:          #1c1e08;
+            --text-light:    #565820;
+            --border:        #d2d468;
+            --bg:            #f4f4db;
             --card:          #ffffff;
-            --header-from:   #1a2e08;
-            --header-to:     #4e8018;
-            --shadow:        rgba(28, 50, 8, 0.13);
+            --header-from:   #1c1e06;
+            --header-to:     #484a14;
+            --shadow:        rgba(26, 28, 8, 0.13);
             --tab-bg:        #ffffff;
-            --toggle-bg:     #4d7c10;
+            --toggle-bg:     #6c7010;
             --toggle-color:  #ffffff;
         }
 
         /* ===== DARK MODE ===== */
+        /* --accent: #b3b833 is 8:1 contrast on --card, perfect for dark mode */
         [data-theme="dark"] {
-            --primary:       #c6e060;
-            --accent:        #99cc28;
-            --accent-vivid:  #99cc28;
-            --accent-light:  #1c2c08;
-            --text:          #d4e6a8;
-            --text-light:    #869e50;
-            --border:        #2c3e14;
-            --bg:            #111808;
-            --card:          #1a2210;
-            --header-from:   #0a1204;
-            --header-to:     #1c2e08;
-            --shadow:        rgba(0, 0, 0, 0.45);
-            --tab-bg:        #1a2210;
-            --toggle-bg:     #c6e060;
-            --toggle-color:  #111808;
+            --primary:       #d4d658;
+            --accent:        #b3b833;
+            --accent-vivid:  #b3b833;
+            --accent-light:  #1c1e06;
+            --text:          #e2e2b2;
+            --text-light:    #888a38;
+            --border:        #2e300e;
+            --bg:            #131406;
+            --card:          #1a1c08;
+            --header-from:   #0c0e02;
+            --header-to:     #1e2006;
+            --shadow:        rgba(0, 0, 0, 0.48);
+            --tab-bg:        #1a1c08;
+            --toggle-bg:     #b3b833;
+            --toggle-color:  #131406;
         }
 
         body {
@@ -60,7 +63,7 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
-        /* ===== CONTROLS (flags + theme toggle) ===== */
+        /* ===== CONTROLS ===== */
         .controls {
             position: fixed;
             top: 20px;
@@ -98,13 +101,13 @@
             border: 2px solid transparent;
             box-shadow: 0 2px 8px var(--shadow);
             object-fit: cover;
-            transition: transform 0.2s, border-color 0.2s;
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
         }
 
         .language-flag:hover { transform: scale(1.1); }
         .language-flag.active {
             border-color: var(--accent-vivid);
-            box-shadow: 0 0 0 3px rgba(126,181,42,0.35);
+            box-shadow: 0 0 0 3px rgba(179, 184, 51, 0.35);
         }
 
         /* ===== CONTAINER ===== */
@@ -220,7 +223,6 @@
             to   { opacity: 1; transform: translateY(0); }
         }
 
-        /* Section title */
         .section-title {
             font-size: 0.7em;
             font-weight: 700;
@@ -235,7 +237,6 @@
 
         .section-gap { margin-top: 36px; }
 
-        /* About */
         .about-text {
             font-size: 0.975em;
             line-height: 1.85;
@@ -291,8 +292,8 @@
             border-radius: 50%;
             background: var(--card);
             border: 3px solid var(--accent-vivid);
-            box-shadow: 0 0 0 3px rgba(126,181,42,0.2);
-            transition: background 0.3s, border-color 0.3s;
+            box-shadow: 0 0 0 3px rgba(179, 184, 51, 0.2);
+            transition: background 0.3s;
         }
 
         .timeline-title {
@@ -354,11 +355,10 @@
             text-decoration: none;
             color: var(--text);
             border: 1px solid var(--border);
-            transition: background 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+            transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
         }
 
         .contact-card:hover {
-            background: var(--accent-light);
             border-color: var(--accent-vivid);
             transform: translateY(-2px);
             box-shadow: 0 5px 16px var(--shadow);
@@ -727,13 +727,10 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Restore theme
             const savedTheme = localStorage.getItem('cv-theme') ||
                 (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
             document.documentElement.setAttribute('data-theme', savedTheme);
             document.getElementById('theme-icon').className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-
-            // Restore language
             const savedLang = localStorage.getItem('cv-lang') || 'en';
             setLanguage(savedLang);
         });
