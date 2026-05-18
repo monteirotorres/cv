@@ -4,68 +4,382 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CV - Pedro Henrique Monteiro Torres</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; background-color: #f9f9f9; margin: 0; padding: 20px; }
-        .container { max-width: 960px; margin: auto; background: #fff; box-shadow: 0 0 15px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden; position: relative; }
-        .header { display: flex; align-items: center; padding: 20px; background-color: #f2f2f2; border-bottom: 1px solid #ddd; }
-        .profile-pic { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; margin-right: 20px; }
-        .header-info h1 { margin: 0; font-size: 2.2em; color: #333; }
-        .header-info h2 { margin: 5px 0 0; font-size: 1.2em; color: #666; font-weight: 400; }
-        .tabs { display: flex; background: #333; }
-        .tab-button { background: #333; border: none; color: white; padding: 14px 16px; cursor: pointer; font-size: 1em; flex-grow: 1; transition: background-color 0.3s; }
-        .tab-button:hover, .tab-button.active { background-color: #555; }
-        .tab-content { display: none; padding: 20px; border-top: 1px solid #ddd; animation: fadeIn 0.5s; }
-        .tab-content.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        ul { list-style-type: none; padding-left: 0; }
-        li { margin-bottom: 15px; padding-left: 20px; position: relative; }
-        li::before { content: '•'; color: #333; font-weight: bold; position: absolute; left: 0; }
-        h3 { border-bottom: 2px solid #f0f0f0; padding-bottom: 8px; margin-top: 0; }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        /* New styles for flag container and flags */
+        :root {
+            --primary: #1a2e4a;
+            --accent: #2471a3;
+            --accent-light: #d6eaf8;
+            --accent-hover: #1a5276;
+            --text: #2c3e50;
+            --text-light: #6c7a89;
+            --border: #e5eaf0;
+            --bg: #eef2f7;
+            --card: #ffffff;
+            --timeline-dot: #2471a3;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            line-height: 1.7;
+            color: var(--text);
+            background-color: var(--bg);
+            margin: 0;
+            padding: 30px 20px;
+            min-height: 100vh;
+        }
+
+        /* Language toggle */
         .language-flags {
             position: fixed;
             top: 20px;
             right: 20px;
             display: flex;
-            gap: 10px;
+            gap: 8px;
             z-index: 1000;
         }
+
         .language-flag {
-            width: 30px; /* Adjust size as needed */
-            height: 20px; /* Adjust size as needed */
+            width: 38px;
+            height: 26px;
             cursor: pointer;
-            border: 1px solid #ccc;
-            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+            border-radius: 5px;
+            border: 2px solid transparent;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.25);
             object-fit: cover;
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
         }
+
+        .language-flag:hover { transform: scale(1.12); }
         .language-flag.active {
-            border: 2px solid #007bff; /* Highlight active flag */
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(36,113,163,0.3);
         }
-        /* Styles for language specific content */
-        .cv-language-content {
-            display: none; /* Hidden by default */
+
+        /* Main container */
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            background: var(--card);
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.13);
         }
-        .cv-language-content.active {
-            display: block; /* Visible when active */
+
+        .cv-language-content { display: none; }
+        .cv-language-content.active { display: block; }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1a2e4a 0%, #2471a3 100%);
+            padding: 44px 44px 40px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 320px;
+            height: 320px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .profile-pic {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(255,255,255,0.85);
+            box-shadow: 0 6px 24px rgba(0,0,0,0.35);
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-info { position: relative; z-index: 1; }
+
+        .header-info h1 {
+            font-size: 1.9em;
+            font-weight: 700;
+            letter-spacing: -0.4px;
+            margin-bottom: 6px;
+            line-height: 1.2;
+        }
+
+        .header-info h2 {
+            font-size: 1em;
+            font-weight: 400;
+            opacity: 0.82;
+            letter-spacing: 0.2px;
+        }
+
+        /* Navigation */
+        .tabs {
+            display: flex;
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .tab-button {
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            color: var(--text-light);
+            padding: 15px 20px;
+            cursor: pointer;
+            font-size: 0.875em;
+            font-weight: 500;
+            font-family: inherit;
+            flex-grow: 1;
+            transition: color 0.2s, background 0.2s, border-color 0.2s;
+            letter-spacing: 0.2px;
+        }
+
+        .tab-button:hover {
+            color: var(--accent);
+            background: var(--accent-light);
+        }
+
+        .tab-button.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Content area */
+        .tab-content {
+            display: none;
+            padding: 38px 44px;
+            animation: fadeUp 0.3s ease;
+        }
+
+        .tab-content.active { display: block; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Section title */
+        .section-title {
+            font-size: 0.7em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.8px;
+            color: var(--accent);
+            margin-bottom: 18px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-light);
+        }
+
+        .section-gap { margin-top: 36px; }
+
+        /* About */
+        .about-text {
+            font-size: 0.975em;
+            color: var(--text);
+            line-height: 1.85;
+            margin-bottom: 32px;
+        }
+
+        /* Awards */
+        .awards-list { list-style: none; }
+
+        .awards-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 13px 16px;
+            margin-bottom: 9px;
+            background: var(--bg);
+            border-radius: 9px;
+            border-left: 3px solid var(--accent);
+            font-size: 0.92em;
+            line-height: 1.5;
+        }
+
+        .awards-list li::before {
+            content: '\f091';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: var(--accent);
+            font-size: 0.85em;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        /* Timeline */
+        .timeline { position: relative; padding-left: 28px; }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 8px;
+            bottom: 4px;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 26px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 5px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid var(--timeline-dot);
+            box-shadow: 0 0 0 3px rgba(36,113,163,0.15);
+        }
+
+        .timeline-title {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.95em;
+            line-height: 1.4;
+        }
+
+        .timeline-sub {
+            color: var(--text-light);
+            font-size: 0.845em;
+            margin-top: 3px;
+        }
+
+        /* Publications */
+        .pub-list { list-style: none; }
+
+        .pub-item {
+            padding: 14px 16px;
+            margin-bottom: 9px;
+            background: var(--bg);
+            border-radius: 9px;
+            font-size: 0.875em;
+            line-height: 1.65;
+            border: 1px solid var(--border);
+            transition: box-shadow 0.2s, border-color 0.2s;
+        }
+
+        .pub-item:hover {
+            box-shadow: 0 3px 14px rgba(36,113,163,0.1);
+            border-color: #b2cde8;
+        }
+
+        .pub-item a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9em;
+        }
+
+        .pub-item a:hover { text-decoration: underline; }
+
+        /* Contact grid */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .contact-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 18px 20px;
+            background: var(--bg);
+            border-radius: 11px;
+            text-decoration: none;
+            color: var(--text);
+            border: 1px solid var(--border);
+            transition: background 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+        }
+
+        .contact-card:hover {
+            background: var(--accent-light);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 16px rgba(36,113,163,0.14);
+        }
+
+        .contact-icon {
+            width: 42px;
+            height: 42px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1em;
+            flex-shrink: 0;
+        }
+
+        .contact-label {
+            font-size: 0.68em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-light);
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .contact-value {
+            font-size: 0.88em;
+            font-weight: 500;
+            color: var(--accent);
+            word-break: break-all;
+        }
+
+        /* Responsive */
+        @media (max-width: 620px) {
+            body { padding: 10px; }
+            .header { flex-direction: column; text-align: center; padding: 32px 24px 28px; }
+            .tab-content { padding: 28px 22px; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .tab-button { padding: 13px 10px; font-size: 0.8em; }
         }
     </style>
 </head>
-<body >
+<body>
+
     <div class="language-flags">
-            <img src="https://flagcdn.com/w40/br.png" class="language-flag" id="flag-pt" onclick="setLanguage('pt')" alt="Portuguese Flag">
-            <img src="https://flagcdn.com/w40/us.png" class="language-flag" id="flag-en" onclick="setLanguage('en')" alt="US Flag">
-        </div>
+        <img src="https://flagcdn.com/w40/br.png" class="language-flag" id="flag-pt" onclick="setLanguage('pt')" alt="Português">
+        <img src="https://flagcdn.com/w40/us.png" class="language-flag" id="flag-en" onclick="setLanguage('en')" alt="English">
+    </div>
 
     <div class="container">
 
-        <!-- Portuguese CV Content -->
+        <!-- ===== PORTUGUÊS ===== -->
         <div id="cv-pt" class="cv-language-content">
             <div class="header">
                 <img src="foto.jpg" alt="Pedro Henrique Monteiro Torres" class="profile-pic">
                 <div class="header-info">
                     <h1>Pedro Henrique Monteiro Torres</h1>
-                    <h2>Pesquisador e Professor Adjunto</h2>
+                    <h2>Pesquisador &amp; Professor Adjunto &nbsp;·&nbsp; UFRJ</h2>
                 </div>
             </div>
 
@@ -76,91 +390,144 @@
                 <button class="tab-button" onclick="openTab(event, 'contato-pt')">Contato</button>
             </div>
 
+            <!-- Perfil PT -->
             <div id="perfil-pt" class="tab-content active">
-                <h3>Sobre</h3>
-                <p>Pesquisador e professor com vasta experiência em Microbiologia, Bioquímica e Biofísica, atuando principalmente nas áreas de biologia estrutural computacional, desenho de fármacos e bioinformática. Atualmente Professor Adjunto no Instituto de Biofísica Carlos Chagas Filho (UFRJ).</p>
-                <h3>Prêmios e Títulos</h3>
-                <ul>
+                <h3 class="section-title">Sobre</h3>
+                <p class="about-text">Pesquisador e professor com vasta experiência em Microbiologia, Bioquímica e Biofísica, atuando principalmente nas áreas de biologia estrutural computacional, desenho de fármacos e bioinformática. Atualmente Professor Adjunto no Instituto de Biofísica Carlos Chagas Filho (UFRJ).</p>
+
+                <h3 class="section-title">Prêmios e Títulos</h3>
+                <ul class="awards-list">
                     <li>Jovem Cientista do Nosso Estado, FAPERJ (2023)</li>
                     <li>Moção de Louvor pela organização do 3° Curso de Verão em Biofísica, IBCCF - UFRJ (2016)</li>
-                    <li>Aprovação em Concurso público - Pesquisador em Saúde Pública, Fundação Oswaldo Cruz (2014)</li>
-                    <li>Aprovação em Concurso público - Professor Substituto, UERJ (2013)</li>
-                    <li>Menção Honrosa - São Paulo School of Advanced Science, EMBRAPA (2012)</li>
+                    <li>Aprovação em Concurso Público — Pesquisador em Saúde Pública, Fundação Oswaldo Cruz (2014)</li>
+                    <li>Aprovação em Concurso Público — Professor Substituto, UERJ (2013)</li>
+                    <li>Menção Honrosa — São Paulo School of Advanced Science, EMBRAPA (2012)</li>
                 </ul>
             </div>
 
+            <!-- Formação PT -->
             <div id="formacao-pt" class="tab-content">
-                <h3>Formação Acadêmica</h3>
-                <ul>
-                    <li><strong>Doutorado em Ciências Biológicas (Biofísica)</strong> - 2014, Universidade Federal do Rio de Janeiro (UFRJ)</li>
-                    <li><strong>Mestrado em Ciências Biológicas (Biofísica)</strong> - 2010, Universidade Federal do Rio de Janeiro (UFRJ)</li>
-                    <li><strong>Graduação em Ciências Biológicas: Microbiologia e Imunologia</strong> - 2008, Universidade Federal do Rio de Janeiro (UFRJ)</li>
-                </ul>
-                <h3>Experiência Profissional</h3>
-                <ul>
-                    <li><strong>Professor Adjunto</strong>, UFRJ (Mar 2020 - Atual)</li>
-                    <li><strong>Pesquisador Associado</strong>, University of Cambridge (2018 - 2020)</li>
-                    <li><strong>Pesquisador (Programa de Computação Científica)</strong>, Fiocruz (2016 - 2018)</li>
-                    <li><strong>Professor Substituto</strong>, UERJ (2013 - 2014)</li>
-                </ul>
+                <h3 class="section-title">Formação Acadêmica</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-title">Doutorado em Ciências Biológicas (Biofísica)</div>
+                        <div class="timeline-sub">Universidade Federal do Rio de Janeiro (UFRJ) &nbsp;·&nbsp; 2014</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-title">Mestrado em Ciências Biológicas (Biofísica)</div>
+                        <div class="timeline-sub">Universidade Federal do Rio de Janeiro (UFRJ) &nbsp;·&nbsp; 2010</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-title">Graduação em Ciências Biológicas: Microbiologia e Imunologia</div>
+                        <div class="timeline-sub">Universidade Federal do Rio de Janeiro (UFRJ) &nbsp;·&nbsp; 2008</div>
+                    </div>
+                </div>
+
+                <h3 class="section-title section-gap">Experiência Profissional</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-title">Professor Adjunto</div>
+                        <div class="timeline-sub">UFRJ &nbsp;·&nbsp; Mar 2020 – Atual</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-title">Pesquisador Associado</div>
+                        <div class="timeline-sub">University of Cambridge &nbsp;·&nbsp; 2018 – 2020</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-title">Pesquisador (Programa de Computação Científica)</div>
+                        <div class="timeline-sub">Fiocruz &nbsp;·&nbsp; 2016 – 2018</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-title">Professor Substituto</div>
+                        <div class="timeline-sub">UERJ &nbsp;·&nbsp; 2013 – 2014</div>
+                    </div>
+                </div>
             </div>
 
+            <!-- Publicações PT -->
             <div id="publicacoes-pt" class="tab-content">
-                <h3>Artigos Completos Publicados em Periódicos</h3>
-                <ul><li>BANDEIRA, P.T. et al. (2025). Immunolocalization and 3D modeling of three unique proteins belonging to the costa of Tritrichomonas foetus. PARASITOLOGY RESEARCH. <a href="https://doi.org/10.1007/s00436-025-08466-4" target="_blank">[DOI]</a></li>
-<li>GOMES, V.M.S. et al. (2025). RND/HAE-1 members in the Pseudomonadota phylum: exploring multidrug resistance. BIOPHYSICAL REVIEWS. <a href="https://doi.org/10.1007/s12551-025-01297-8" target="_blank">[DOI]</a></li>
-<li>DE VASCONCELOS E SOUZA, A. et al. (2024). Gene Expression and Prognostic Value of NADPH Oxidase Enzymes in Breast Cancer. INTERNATIONAL JOURNAL OF MOLECULAR SCIENCES. <a href="https://doi.org/10.3390/ijms25063464" target="_blank">[DOI]</a></li>
-<li>MOTTIN, M. et al. (2022). Chalcones from Angelica keiskei (ashitaba) inhibit key Zika virus replication proteins. BIOORGANIC CHEMISTRY.</li>
-<li>COELHO, F.S. et al. (2021). A novel receptor for platelet-activating factor and lysophosphatidylcholine in Trypanosoma cruzi. Molecular Microbiology. <a href="https://doi.org/10.1111/mmi.14778" target="_blank">[DOI]</a></li>
-<li>ALSULAMI, A.F. et al. (2021). COSMIC Cancer Gene Census 3D database: understanding the impacts of mutations on cancer targets. BRIEFINGS IN BIOINFORMATICS. <a href="https://doi.org/10.1093/bib/bbab220" target="_blank">[DOI]</a></li>
-<li>JOFILY, P. et al. (2021). Improving Blind Docking in DOCK6 through an Automated Preliminary Fragment Probing Strategy. MOLECULES. <a href="https://doi.org/10.3390/molecules26051224" target="_blank">[DOI]</a></li>
-<li>MENDES, V. et al. (2021). Inhibiting Mycobacterium tuberculosis CoaBC by targeting an allosteric site. Nature Communications. <a href="https://doi.org/10.1038/s41467-020-20224-x" target="_blank">[DOI]</a></li>
-<li>BEAUDOIN, C.A. et al. (2021). Predicted structural mimicry of spike receptor-binding motifs from highly pathogenic human coronaviruses. COMPUTATIONAL AND STRUCTURAL BIOTECHNOLOGY JOURNAL. <a href="https://doi.org/10.1016/j.csbj.2021.06.041" target="_blank">[DOI]</a></li>
-<li>TORRES, P.H.M. et al. (2021). ProtCHOIR: a tool for proteome-scale generation of homo-oligomers. BRIEFINGS IN BIOINFORMATICS. <a href="https://doi.org/10.1093/bib/bbab182" target="_blank">[DOI]</a></li>
-<li>ALSULAMI, A.F. et al. (2021). SARS-CoV-2 3D database: understanding the coronavirus proteome and evaluating possible drug targets. Briefings in Bioinformatics. <a href="https://doi.org/10.1093/bib/bbaa404" target="_blank">[DOI]</a></li>
-<li>VEDITHI, S.C. et al. (2021). Structure-Guided Computational Approaches to Unravel Druggable Proteomic Landscape of Mycobacterium leprae. FRONTIERS IN MOLECULAR BIOSCIENCES. <a href="https://doi.org/10.3389/fmolb.2021.663301" target="_blank">[DOI]</a></li>
-<li>COPOIU, L. et al. (2020). ProCarbDB: a database of carbohydrate-binding proteins. NUCLEIC ACIDS RESEARCH. <a href="https://doi.org/10.1093/nar/gkz860" target="_blank">[DOI]</a></li>
-<li>TORRES, P.H.M. et al. (2019). Key Topics in Molecular Docking for Drug Design. INTERNATIONAL JOURNAL OF MOLECULAR SCIENCES. <a href="https://doi.org/10.3390/ijms20184574" target="_blank">[DOI]</a></li>
-<li>SKWARK, M.J. et al. (2019). Mabellini: a genome-wide database for understanding the structural proteome... Database-The Journal of Biological Databases and Curation. <a href="https://doi.org/10.1093/database/baz113" target="_blank">[DOI]</a></li>
-<li>MARYAM, A. et al. (2019). The Molecular Organization of Human cGMP Specific Phosphodiesterase 6 (PDE6)... COMPUTATIONAL AND STRUCTURAL BIOTECHNOLOGY JOURNAL. <a href="https://doi.org/10.1016/j.csbj.2019.03.004" target="_blank">[DOI]</a></li>
-<li>MOTTIN, M. et al. (2018). Computational drug discovery for the Zika virus. BRAZILIAN JOURNAL OF PHARMACEUTICAL SCIENCES. <a href="https://doi.org/10.1590/s2175-97902018000001002" target="_blank">[DOI]</a></li>
-<li>GÓMEZ, M.M. et al. (2018). Genomic and structural features of the yellow fever virus from the 2016-2017 Brazilian outbreak. JOURNAL OF GENERAL VIROLOGY. <a href="https://doi.org/10.1099/jgv.0.001033" target="_blank">[DOI]</a></li>
-<li>MARTINS, L.C. et al. (2018). Investigation of the binding mode of a novel cruzain inhibitor... JOURNAL OF COMPUTER-AIDED MOLECULAR DESIGN.</li>
-<li>MOTTIN, M. et al. (2018). The A-Z of Zika drug discovery. DRUG DISCOVERY TODAY. <a href="https://doi.org/10.1016/j.drudis.2018.06.014" target="_blank">[DOI]</a></li>
-<li>SODERO, A.C.R. et al. (2017). Insights into cytochrome bc1 complex binding mode of antimalarial 2-hydroxy-1,4-naphthoquinones... MEMORIAS DO INSTITUTO OSWALDO CRUZ. <a href="https://doi.org/10.1590/0074-02760160417" target="_blank">[DOI]</a></li>
-<li>TORRES, P.H.M. et al. (2016). Alternative Model for RND-Type Efflux Pump. Journal of the Brazilian Chemical Society. <a href="https://doi.org/10.5935/0103-5053.20160125" target="_blank">[DOI]</a></li>
-<li>COSTA, L.B. et al. (2016). Compound profiling and 3D-QSAR studies of hydrazone derivatives with activity against intracellular Trypanosoma cruzi. Bioorganic & Medicinal Chemistry. <a href="https://doi.org/10.1016/j.bmc.2016.02.027" target="_blank">[DOI]</a></li>
-<li>SOARES, R.O. et al. (2016). Dataset showing the impact of the protonation states on molecular dynamics of HIV protease. Data in Brief. <a href="https://doi.org/10.1016/j.dib.2016.07.040" target="_blank">[DOI]</a></li>
-<li>SOARES, R.O. et al. (2016). Unraveling HIV Protease Flaps Dynamics by Constant pH Molecular Dynamics Simulations. Journal of Structural Biology. <a href="https://doi.org/10.1016/j.jsb.2016.06.006" target="_blank">[DOI]</a></li>
-<li>DE OLIVEIRA, V.M. et al. (2014). New treatments for Chagas disease and the relationship between chagasic patients and cancers. Cancer Research Journal. <a href="https://doi.org/10.11648/j.crj.s.2014020601.12" target="_blank">[DOI]</a></li>
-<li>HOELZ, L.V.B. et al. (2013). G Protein-Coupled Receptors. Revista Virtual de Química. <a href="https://doi.org/10.1126/science.289.5480.739" target="_blank">[DOI]</a></li>
-<li>TORRES, P.H.M. et al. (2011). Structural analysis of the N-terminal fragment of the antiangiogenic protein endostatin... Proteins. <a href="https://doi.org/10.1002/prot.23096" target="_blank">[DOI]</a></li></ul>
-                <h3>Capítulos de Livros</h3>
-                <ul><li>Waman, V.P. et al. (2020). The Genome3D Consortium for Structural Annotations of Selected Model Organisms. In: Methods in Molecular Biology. <a href="https://doi.org/10.1007/978-1-0716-0708-4_3" target="_blank">[DOI]</a></li>
-<li>HOELZ, L.V.B. et al. (2015). G Protein-Coupled Receptors. In: Compendium of Medicinal Chemistry. <a href="https://doi.org/10.1126/science.289.5480.739" target="_blank">[DOI]</a></li></ul>
-                <h3>Resumos em Anais de Eventos</h3>
-                <ul><li>TORRES, P.H.M. et al. (2010). Conformational Analysis of an Antiangiogenic and Antitumor Endostatin-Derived Peptide. In: II Encontro Anual do INBEB. <a href="https://doi.org/10.1038/nrc.2016.108" target="_blank">[DOI]</a></li>
-<li>TORRES, P.H.M. et al. (2010). Conformational Analysis of an Antiangiogenic and Antitumor Endostatin-Derived Peptide. In: 3rd Latin American Protein Society Meeting. <a href="https://doi.org/10.1038/nrc.2016.108" target="_blank">[DOI]</a></li>
-<li>TORRES, P.H.M. et al. (2010). Molecular Dynamics Assisted Planning Of Antiangiogenic Peptides Based on Endostatin. In: III Latin American Postgraduate Program of Biophysics Course. <a href="https://doi.org/10.1016/j.molonc.2008.04.001" target="_blank">[DOI]</a></li></ul>
+                <h3 class="section-title">Artigos em Periódicos</h3>
+                <ul class="pub-list">
+                    <li class="pub-item">BANDEIRA, P.T. et al. (2025). Immunolocalization and 3D modeling of three unique proteins belonging to the costa of <em>Tritrichomonas foetus</em>. <em>Parasitology Research</em>. <a href="https://doi.org/10.1007/s00436-025-08466-4" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">GOMES, V.M.S. et al. (2025). RND/HAE-1 members in the Pseudomonadota phylum: exploring multidrug resistance. <em>Biophysical Reviews</em>. <a href="https://doi.org/10.1007/s12551-025-01297-8" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">DE VASCONCELOS E SOUZA, A. et al. (2024). Gene Expression and Prognostic Value of NADPH Oxidase Enzymes in Breast Cancer. <em>International Journal of Molecular Sciences</em>. <a href="https://doi.org/10.3390/ijms25063464" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">MOTTIN, M. et al. (2022). Chalcones from <em>Angelica keiskei</em> (ashitaba) inhibit key Zika virus replication proteins. <em>Bioorganic Chemistry</em>.</li>
+                    <li class="pub-item">COELHO, F.S. et al. (2021). A novel receptor for platelet-activating factor and lysophosphatidylcholine in <em>Trypanosoma cruzi</em>. <em>Molecular Microbiology</em>. <a href="https://doi.org/10.1111/mmi.14778" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">ALSULAMI, A.F. et al. (2021). COSMIC Cancer Gene Census 3D database: understanding the impacts of mutations on cancer targets. <em>Briefings in Bioinformatics</em>. <a href="https://doi.org/10.1093/bib/bbab220" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">JOFILY, P. et al. (2021). Improving Blind Docking in DOCK6 through an Automated Preliminary Fragment Probing Strategy. <em>Molecules</em>. <a href="https://doi.org/10.3390/molecules26051224" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">MENDES, V. et al. (2021). Inhibiting <em>Mycobacterium tuberculosis</em> CoaBC by targeting an allosteric site. <em>Nature Communications</em>. <a href="https://doi.org/10.1038/s41467-020-20224-x" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">BEAUDOIN, C.A. et al. (2021). Predicted structural mimicry of spike receptor-binding motifs from highly pathogenic human coronaviruses. <em>Computational and Structural Biotechnology Journal</em>. <a href="https://doi.org/10.1016/j.csbj.2021.06.041" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">TORRES, P.H.M. et al. (2021). ProtCHOIR: a tool for proteome-scale generation of homo-oligomers. <em>Briefings in Bioinformatics</em>. <a href="https://doi.org/10.1093/bib/bbab182" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">ALSULAMI, A.F. et al. (2021). SARS-CoV-2 3D database: understanding the coronavirus proteome and evaluating possible drug targets. <em>Briefings in Bioinformatics</em>. <a href="https://doi.org/10.1093/bib/bbaa404" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">VEDITHI, S.C. et al. (2021). Structure-Guided Computational Approaches to Unravel Druggable Proteomic Landscape of <em>Mycobacterium leprae</em>. <em>Frontiers in Molecular Biosciences</em>. <a href="https://doi.org/10.3389/fmolb.2021.663301" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">COPOIU, L. et al. (2020). ProCarbDB: a database of carbohydrate-binding proteins. <em>Nucleic Acids Research</em>. <a href="https://doi.org/10.1093/nar/gkz860" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">TORRES, P.H.M. et al. (2019). Key Topics in Molecular Docking for Drug Design. <em>International Journal of Molecular Sciences</em>. <a href="https://doi.org/10.3390/ijms20184574" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">SKWARK, M.J. et al. (2019). Mabellini: a genome-wide database for understanding the structural proteome of <em>Mycobacterium abscessus</em>. <em>Database — Journal of Biological Databases and Curation</em>. <a href="https://doi.org/10.1093/database/baz113" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">MARYAM, A. et al. (2019). The Molecular Organization of Human cGMP Specific Phosphodiesterase 6 (PDE6). <em>Computational and Structural Biotechnology Journal</em>. <a href="https://doi.org/10.1016/j.csbj.2019.03.004" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">MOTTIN, M. et al. (2018). Computational drug discovery for the Zika virus. <em>Brazilian Journal of Pharmaceutical Sciences</em>. <a href="https://doi.org/10.1590/s2175-97902018000001002" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">GÓMEZ, M.M. et al. (2018). Genomic and structural features of the yellow fever virus from the 2016–2017 Brazilian outbreak. <em>Journal of General Virology</em>. <a href="https://doi.org/10.1099/jgv.0.001033" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">MARTINS, L.C. et al. (2018). Investigation of the binding mode of a novel cruzain inhibitor. <em>Journal of Computer-Aided Molecular Design</em>.</li>
+                    <li class="pub-item">MOTTIN, M. et al. (2018). The A–Z of Zika drug discovery. <em>Drug Discovery Today</em>. <a href="https://doi.org/10.1016/j.drudis.2018.06.014" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">SODERO, A.C.R. et al. (2017). Insights into cytochrome bc1 complex binding mode of antimalarial 2-hydroxy-1,4-naphthoquinones. <em>Memorias do Instituto Oswaldo Cruz</em>. <a href="https://doi.org/10.1590/0074-02760160417" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">TORRES, P.H.M. et al. (2016). Alternative Model for RND-Type Efflux Pump. <em>Journal of the Brazilian Chemical Society</em>. <a href="https://doi.org/10.5935/0103-5053.20160125" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">COSTA, L.B. et al. (2016). Compound profiling and 3D-QSAR studies of hydrazone derivatives with activity against intracellular <em>Trypanosoma cruzi</em>. <em>Bioorganic &amp; Medicinal Chemistry</em>. <a href="https://doi.org/10.1016/j.bmc.2016.02.027" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">SOARES, R.O. et al. (2016). Dataset showing the impact of the protonation states on molecular dynamics of HIV protease. <em>Data in Brief</em>. <a href="https://doi.org/10.1016/j.dib.2016.07.040" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">SOARES, R.O. et al. (2016). Unraveling HIV Protease Flaps Dynamics by Constant pH Molecular Dynamics Simulations. <em>Journal of Structural Biology</em>. <a href="https://doi.org/10.1016/j.jsb.2016.06.006" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">DE OLIVEIRA, V.M. et al. (2014). New treatments for Chagas disease and the relationship between chagasic patients and cancers. <em>Cancer Research Journal</em>. <a href="https://doi.org/10.11648/j.crj.s.2014020601.12" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">HOELZ, L.V.B. et al. (2013). G Protein-Coupled Receptors. <em>Revista Virtual de Química</em>.</li>
+                    <li class="pub-item">TORRES, P.H.M. et al. (2011). Structural analysis of the N-terminal fragment of the antiangiogenic protein endostatin. <em>Proteins</em>. <a href="https://doi.org/10.1002/prot.23096" target="_blank">[DOI]</a></li>
+                </ul>
+
+                <h3 class="section-title section-gap">Capítulos de Livros</h3>
+                <ul class="pub-list">
+                    <li class="pub-item">Waman, V.P. et al. (2020). The Genome3D Consortium for Structural Annotations of Selected Model Organisms. In: <em>Methods in Molecular Biology</em>. <a href="https://doi.org/10.1007/978-1-0716-0708-4_3" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">HOELZ, L.V.B. et al. (2015). G Protein-Coupled Receptors. In: <em>Compendium of Medicinal Chemistry</em>.</li>
+                </ul>
+
+                <h3 class="section-title section-gap">Resumos em Anais de Eventos</h3>
+                <ul class="pub-list">
+                    <li class="pub-item">TORRES, P.H.M. et al. (2010). Conformational Analysis of an Antiangiogenic and Antitumor Endostatin-Derived Peptide. In: <em>II Encontro Anual do INBEB</em>.</li>
+                    <li class="pub-item">TORRES, P.H.M. et al. (2010). Conformational Analysis of an Antiangiogenic and Antitumor Endostatin-Derived Peptide. In: <em>3rd Latin American Protein Society Meeting</em>.</li>
+                    <li class="pub-item">TORRES, P.H.M. et al. (2010). Molecular Dynamics Assisted Planning of Antiangiogenic Peptides Based on Endostatin. In: <em>III Latin American Postgraduate Program of Biophysics Course</em>.</li>
+                </ul>
             </div>
 
+            <!-- Contato PT -->
             <div id="contato-pt" class="tab-content">
-                <h3>Entre em Contato</h3>
-                
-                <p><strong>Email Alternativo:</strong> <a href="mailto:monteirotorres@biof.ufrj.br">monteirotorres@biof.ufrj.br</a></p>
-                
-                <p><strong>Lattes:</strong> <a href="http://lattes.cnpq.br/4188974374017863" target="_blank">http://lattes.cnpq.br/4188974374017863</a></p>
-                <p><strong>Orcid:</strong> <a href="https://orcid.org/0000-0002-0945-1495" target="_blank">https://orcid.org/0000-0002-0945-1495</a></p>
+                <h3 class="section-title">Entre em Contato</h3>
+                <div class="contact-grid">
+                    <a href="mailto:monteirotorres@biof.ufrj.br" class="contact-card">
+                        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                        <div>
+                            <div class="contact-label">Email</div>
+                            <div class="contact-value">monteirotorres@biof.ufrj.br</div>
+                        </div>
+                    </a>
+                    <a href="http://lattes.cnpq.br/4188974374017863" target="_blank" class="contact-card">
+                        <div class="contact-icon"><i class="fas fa-graduation-cap"></i></div>
+                        <div>
+                            <div class="contact-label">Currículo Lattes</div>
+                            <div class="contact-value">Ver perfil no CNPq</div>
+                        </div>
+                    </a>
+                    <a href="https://orcid.org/0000-0002-0945-1495" target="_blank" class="contact-card">
+                        <div class="contact-icon"><i class="fab fa-orcid"></i></div>
+                        <div>
+                            <div class="contact-label">ORCID</div>
+                            <div class="contact-value">0000-0002-0945-1495</div>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
 
-        <!-- English CV Content -->
+        <!-- ===== ENGLISH ===== -->
         <div id="cv-en" class="cv-language-content">
             <div class="header">
                 <img src="foto.jpg" alt="Pedro Henrique Monteiro Torres" class="profile-pic">
                 <div class="header-info">
                     <h1>Pedro Henrique Monteiro Torres</h1>
-                    <h2>Researcher and Associate Professor</h2>
+                    <h2>Researcher &amp; Associate Professor &nbsp;·&nbsp; UFRJ</h2>
                 </div>
             </div>
 
@@ -171,131 +538,159 @@
                 <button class="tab-button" onclick="openTab(event, 'contato-en')">Contact</button>
             </div>
 
+            <!-- Profile EN -->
             <div id="perfil-en" class="tab-content active">
-                <h3>About</h3>
-                <p>Researcher and professor with extensive experience in Microbiology, Biochemistry and Biophysics, working mainly in the areas of computational structural biology, drug design and bioinformatics. Currently Associate Professor at the Carlos Chagas Filho Institute of Biophysics (UFRJ).</p>
-                <h3>Awards and Titles</h3>
-                <ul>
+                <h3 class="section-title">About</h3>
+                <p class="about-text">Researcher and professor with extensive experience in Microbiology, Biochemistry and Biophysics, working mainly in the areas of computational structural biology, drug design and bioinformatics. Currently Associate Professor at the Carlos Chagas Filho Institute of Biophysics (UFRJ).</p>
+
+                <h3 class="section-title">Awards &amp; Honours</h3>
+                <ul class="awards-list">
                     <li>Young Scientist of Our State, FAPERJ (2023)</li>
-                    <li>Vote of Commendation for the organization of the 3rd Biophysics Summer Course, IBCCF - UFRJ (2016)</li>
-                    <li>Approval in Public Contest - Researcher in Public Health, Oswaldo Cruz Foundation (2014)</li>
-                    <li>Approval in Public Contest - Substitute Professor, UERJ (2013)</li>
-                    <li>Honorable Mention - São Paulo School of Advanced Science, EMBRAPA (2012)</li>
+                    <li>Vote of Commendation for the organisation of the 3rd Biophysics Summer Course, IBCCF - UFRJ (2016)</li>
+                    <li>Approval in Public Contest — Researcher in Public Health, Oswaldo Cruz Foundation (2014)</li>
+                    <li>Approval in Public Contest — Substitute Professor, UERJ (2013)</li>
+                    <li>Honorable Mention — São Paulo School of Advanced Science, EMBRAPA (2012)</li>
                 </ul>
             </div>
 
+            <!-- Education EN -->
             <div id="formacao-en" class="tab-content">
-                <h3>Academic Background</h3>
-                <ul>
-                    <li><strong>PhD in Biological Sciences (Biophysics)</strong> - 2014, Federal University of Rio de Janeiro (UFRJ)</li>
-                    <li><strong>Master in Biological Sciences (Biophysics)</strong> - 2010, Federal University of Rio de Janeiro (UFRJ)</li>
-                    <li><strong>Bachelor in Biological Sciences: Microbiology and Immunology</strong> - 2008, Federal University of Rio de Janeiro (UFRJ)</li>
-                </ul>
-                <h3>Professional Experience</h3>
-                <ul>
-                    <li><strong>Associate Professor</strong>, UFRJ (Mar 2020 - Present)</li>
-                    <li><strong>Associate Researcher</strong>, University of Cambridge (2018 - 2020)</li>
-                    <li><strong>Researcher (Scientific Computing Program)</strong>, Fiocruz (2016 - 2018)</li>
-                    <li><strong>Substitute Professor</strong>, UERJ (2013 - 2014)</li>
-                </ul>
+                <h3 class="section-title">Academic Background</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-title">PhD in Biological Sciences (Biophysics)</div>
+                        <div class="timeline-sub">Federal University of Rio de Janeiro (UFRJ) &nbsp;·&nbsp; 2014</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-title">Master in Biological Sciences (Biophysics)</div>
+                        <div class="timeline-sub">Federal University of Rio de Janeiro (UFRJ) &nbsp;·&nbsp; 2010</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-title">Bachelor in Biological Sciences: Microbiology and Immunology</div>
+                        <div class="timeline-sub">Federal University of Rio de Janeiro (UFRJ) &nbsp;·&nbsp; 2008</div>
+                    </div>
+                </div>
+
+                <h3 class="section-title section-gap">Professional Experience</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-title">Associate Professor</div>
+                        <div class="timeline-sub">UFRJ &nbsp;·&nbsp; Mar 2020 – Present</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-title">Associate Researcher</div>
+                        <div class="timeline-sub">University of Cambridge &nbsp;·&nbsp; 2018 – 2020</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-title">Researcher (Scientific Computing Program)</div>
+                        <div class="timeline-sub">Fiocruz &nbsp;·&nbsp; 2016 – 2018</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-title">Substitute Professor</div>
+                        <div class="timeline-sub">UERJ &nbsp;·&nbsp; 2013 – 2014</div>
+                    </div>
+                </div>
             </div>
 
+            <!-- Publications EN -->
             <div id="publicacoes-en" class="tab-content">
-                <h3>Full Articles Published in Periodicals</h3>
-                <ul><li>BANDEIRA, P.T. et al. (2025). Immunolocalization and 3D modeling of three unique proteins belonging to the costa of Tritrichomonas foetus. PARASITOLOGY RESEARCH. <a href="https://doi.org/10.1007/s00436-025-08466-4" target="_blank">[DOI]</a></li>
-<li>GOMES, V.M.S. et al. (2025). RND/HAE-1 members in the Pseudomonadota phylum: exploring multidrug resistance. BIOPHYSICAL REVIEWS. <a href="https://doi.org/10.1007/s12551-025-01297-8" target="_blank">[DOI]</a></li>
-<li>DE VASCONCELOS E SOUZA, A. et al. (2024). Gene Expression and Prognostic Value of NADPH Oxidase Enzymes in Breast Cancer. INTERNATIONAL JOURNAL OF MOLECULAR SCIENCES. <a href="https://doi.org/10.3390/ijms25063464" target="_blank">[DOI]</a></li>
-<li>MOTTIN, M. et al. (2022). Chalcones from Angelica keiskei (ashitaba) inhibit key Zika virus replication proteins. BIOORGANIC CHEMISTRY.</li>
-<li>COELHO, F.S. et al. (2021). A novel receptor for platelet-activating factor and lysophosphatidylcholine in Trypanosoma cruzi. Molecular Microbiology. <a href="https://doi.org/10.1111/mmi.14778" target="_blank">[DOI]</a></li>
-<li>ALSULAMI, A.F. et al. (2021). COSMIC Cancer Gene Census 3D database: understanding the impacts of mutations on cancer targets. BRIEFINGS IN BIOINFORMATICS. <a href="https://doi.org/10.1093/bib/bbab220" target="_blank">[DOI]</a></li>
-<li>JOFILY, P. et al. (2021). Improving Blind Docking in DOCK6 through an Automated Preliminary Fragment Probing Strategy. MOLECULES. <a href="https://doi.org/10.3390/molecules26051224" target="_blank">[DOI]</a></li>
-<li>MENDES, V. et al. (2021). Inhibiting Mycobacterium tuberculosis CoaBC by targeting an allosteric site. Nature Communications. <a href="https://doi.org/10.1038/s41467-020-20224-x" target="_blank">[DOI]</a></li>
-<li>BEAUDOIN, C.A. et al. (2021). Predicted structural mimicry of spike receptor-binding motifs from highly pathogenic human coronaviruses. COMPUTATIONAL AND STRUCTURAL BIOTECHNOLOGY JOURNAL. <a href="https://doi.org/10.1016/j.csbj.2021.06.041" target="_blank">[DOI]</a></li>
-<li>TORRES, P.H.M. et al. (2021). ProtCHOIR: a tool for proteome-scale generation of homo-oligomers. BRIEFINGS IN BIOINFORMATICS. <a href="https://doi.org/10.1093/bib/bbab182" target="_blank">[DOI]</a></li>
-<li>ALSULAMI, A.F. et al. (2021). SARS-CoV-2 3D database: understanding the coronavirus proteome and evaluating possible drug targets. Briefings in Bioinformatics. <a href="https://doi.org/10.1093/bib/bbaa404" target="_blank">[DOI]</a></li>
-<li>VEDITHI, S.C. et al. (2021). Structure-Guided Computational Approaches to Unravel Druggable Proteomic Landscape of Mycobacterium leprae. FRONTIERS IN MOLECULAR BIOSCIENCES. <a href="https://doi.org/10.3389/fmolb.2021.663301" target="_blank">[DOI]</a></li>
-<li>COPOIU, L. et al. (2020). ProCarbDB: a database of carbohydrate-binding proteins. NUCLEIC ACIDS RESEARCH. <a href="https://doi.org/10.1093/nar/gkz860" target="_blank">[DOI]</a></li>
-<li>TORRES, P.H.M. et al. (2019). Key Topics in Molecular Docking for Drug Design. INTERNATIONAL JOURNAL OF MOLECULAR SCIENCES. <a href="https://doi.org/10.3390/ijms20184574" target="_blank">[DOI]</a></li>
-<li>SKWARK, M.J. et al. (2019). Mabellini: a genome-wide database for understanding the structural proteome... Database-The Journal of Biological Databases and Curation. <a href="https://doi.org/10.1093/database/baz113" target="_blank">[DOI]</a></li>
-<li>MARYAM, A. et al. (2019). The Molecular Organization of Human cGMP Specific Phosphodiesterase 6 (PDE6)... COMPUTATIONAL AND STRUCTURAL BIOTECHNOLOGY JOURNAL. <a href="https://doi.org/10.1016/j.csbj.2019.03.004" target="_blank">[DOI]</a></li>
-<li>MOTTIN, M. et al. (2018). Computational drug discovery for the Zika virus. BRAZILIAN JOURNAL OF PHARMACEUTICAL SCIENCES. <a href="https://doi.org/10.1590/s2175-97902018000001002" target="_blank">[DOI]</a></li>
-<li>GÓMEZ, M.M. et al. (2018). Genomic and structural features of the yellow fever virus from the 2016-2017 Brazilian outbreak. JOURNAL OF GENERAL VIROLOGY. <a href="https://doi.org/10.1099/jgv.0.001033" target="_blank">[DOI]</a></li>
-<li>MARTINS, L.C. et al. (2018). Investigation of the binding mode of a novel cruzain inhibitor... JOURNAL OF COMPUTER-AIDED MOLECULAR DESIGN.</li>
-<li>MOTTIN, M. et al. (2018). The A-Z of Zika drug discovery. DRUG DISCOVERY TODAY. <a href="https://doi.org/10.1016/j.drudis.2018.06.014" target="_blank">[DOI]</a></li>
-<li>SODERO, A.C.R. et. al. (2017). Insights into cytochrome bc1 complex binding mode of antimalarial 2-hydroxy-1,4-naphthoquinones... MEMORIAS DO INSTITUTO OSWALDO CRUZ. <a href="https://doi.org/10.1590/0074-02760160417" target="_blank">[DOI]</a></li>
-<li>TORRES, P.H.M. et al. (2016). Alternative Model for RND-Type Efflux Pump. Journal of the Brazilian Chemical Society. <a href="https://doi.org/10.5935/0103-5053.20160125" target="_blank">[DOI]</a></li>
-<li>COSTA, L.B. et al. (2016). Compound profiling and 3D-QSAR studies of hydrazone derivatives with activity against intracellular Trypanosoma cruzi. Bioorganic & Medicinal Chemistry. <a href="https://doi.org/10.1016/j.bmc.2016.02.027" target="_blank">[DOI]</a></li>
-<li>SOARES, R.O. et al. (2016). Dataset showing the impact of the protonation states on molecular dynamics of HIV protease. Data in Brief. <a href="https://doi.org/10.1016/j.dib.2016.07.040" target="_blank">[DOI]</a></li>
-<li>SOARES, R.O. et al. (2016). Unraveling HIV Protease Flaps Dynamics by Constant pH Molecular Dynamics Simulations. Journal of Structural Biology. <a href="https://doi.org/10.1016/j.jsb.2016.06.006" target="_blank">[DOI]</a></li>
-<li>DE OLIVEIRA, V.M. et al. (2014). New treatments for Chagas disease and the relationship between chagasic patients and cancers. Cancer Research Journal. <a href="https://doi.org/10.11648/j.crj.s.2014020601.12" target="_blank">[DOI]</a></li>
-<li>HOELZ, L.V.B. et al. (2013). G Protein-Coupled Receptors. Revista Virtual de Química. <a href="https://doi.org/10.1126/science.289.5480.739" target="_blank">[DOI]</a></li>
-<li>TORRES, P.H.M. et al. (2011). Structural analysis of the N-terminal fragment of the antiangiogenic protein endostatin... Proteins. <a href="https://doi.10.1002/prot.23096" target="_blank">[DOI]</a></li></ul>
-                <h3>Book Chapters</h3>
-                <ul><li>Waman, V.P. et al. (2020). The Genome3D Consortium for Structural Annotations of Selected Model Organisms. In: Methods in Molecular Biology. <a href="https://doi.org/10.1007/978-1-0716-0708-4_3" target="_blank">[DOI]</a></li>
-<li>HOELZ, L.V.B. et. al. (2015). G Protein-Coupled Receptors. In: Compendium of Medicinal Chemistry. <a href="https://doi.org/10.1126/science.289.5480.739" target="_blank">[DOI]</a></li></ul>
-                <h3>Abstracts in Event Proceedings</h3>
-                <ul><li>TORRES, P.H.M. et al. (2010). Conformational Analysis of an Antiangiogenic and Antitumor Endostatin-Derived Peptide. In: II INBEB Annual Meeting. <a href="https://doi.org/10.1038/nrc.2016.108" target="_blank">[DOI]</a></li>
-<li>TORRES, P.H.M. et al. (2010). Conformational Analysis of an Antiangiogenic and Antitumor Endostatin-Derived Peptide. In: 3rd Latin American Protein Society Meeting. <a href="https://doi.org/10.1038/nrc.2016.108" target="_blank">[DOI]</a></li>
-<li>TORRES, P.H.M. et al. (2010). Molecular Dynamics Assisted Planning Of Antiangiogenic Peptides Based on Endostatin. In: III Latin American Postgraduate Program of Biophysics Course. <a href="https://doi.org/10.1016/j.molonc.2008.04.001" target="_blank">[DOI]</a></li></ul>
+                <h3 class="section-title">Journal Articles</h3>
+                <ul class="pub-list">
+                    <li class="pub-item">BANDEIRA, P.T. et al. (2025). Immunolocalization and 3D modeling of three unique proteins belonging to the costa of <em>Tritrichomonas foetus</em>. <em>Parasitology Research</em>. <a href="https://doi.org/10.1007/s00436-025-08466-4" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">GOMES, V.M.S. et al. (2025). RND/HAE-1 members in the Pseudomonadota phylum: exploring multidrug resistance. <em>Biophysical Reviews</em>. <a href="https://doi.org/10.1007/s12551-025-01297-8" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">DE VASCONCELOS E SOUZA, A. et al. (2024). Gene Expression and Prognostic Value of NADPH Oxidase Enzymes in Breast Cancer. <em>International Journal of Molecular Sciences</em>. <a href="https://doi.org/10.3390/ijms25063464" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">MOTTIN, M. et al. (2022). Chalcones from <em>Angelica keiskei</em> (ashitaba) inhibit key Zika virus replication proteins. <em>Bioorganic Chemistry</em>.</li>
+                    <li class="pub-item">COELHO, F.S. et al. (2021). A novel receptor for platelet-activating factor and lysophosphatidylcholine in <em>Trypanosoma cruzi</em>. <em>Molecular Microbiology</em>. <a href="https://doi.org/10.1111/mmi.14778" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">ALSULAMI, A.F. et al. (2021). COSMIC Cancer Gene Census 3D database: understanding the impacts of mutations on cancer targets. <em>Briefings in Bioinformatics</em>. <a href="https://doi.org/10.1093/bib/bbab220" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">JOFILY, P. et al. (2021). Improving Blind Docking in DOCK6 through an Automated Preliminary Fragment Probing Strategy. <em>Molecules</em>. <a href="https://doi.org/10.3390/molecules26051224" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">MENDES, V. et al. (2021). Inhibiting <em>Mycobacterium tuberculosis</em> CoaBC by targeting an allosteric site. <em>Nature Communications</em>. <a href="https://doi.org/10.1038/s41467-020-20224-x" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">BEAUDOIN, C.A. et al. (2021). Predicted structural mimicry of spike receptor-binding motifs from highly pathogenic human coronaviruses. <em>Computational and Structural Biotechnology Journal</em>. <a href="https://doi.org/10.1016/j.csbj.2021.06.041" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">TORRES, P.H.M. et al. (2021). ProtCHOIR: a tool for proteome-scale generation of homo-oligomers. <em>Briefings in Bioinformatics</em>. <a href="https://doi.org/10.1093/bib/bbab182" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">ALSULAMI, A.F. et al. (2021). SARS-CoV-2 3D database: understanding the coronavirus proteome and evaluating possible drug targets. <em>Briefings in Bioinformatics</em>. <a href="https://doi.org/10.1093/bib/bbaa404" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">VEDITHI, S.C. et al. (2021). Structure-Guided Computational Approaches to Unravel Druggable Proteomic Landscape of <em>Mycobacterium leprae</em>. <em>Frontiers in Molecular Biosciences</em>. <a href="https://doi.org/10.3389/fmolb.2021.663301" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">COPOIU, L. et al. (2020). ProCarbDB: a database of carbohydrate-binding proteins. <em>Nucleic Acids Research</em>. <a href="https://doi.org/10.1093/nar/gkz860" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">TORRES, P.H.M. et al. (2019). Key Topics in Molecular Docking for Drug Design. <em>International Journal of Molecular Sciences</em>. <a href="https://doi.org/10.3390/ijms20184574" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">SKWARK, M.J. et al. (2019). Mabellini: a genome-wide database for understanding the structural proteome of <em>Mycobacterium abscessus</em>. <em>Database — Journal of Biological Databases and Curation</em>. <a href="https://doi.org/10.1093/database/baz113" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">MARYAM, A. et al. (2019). The Molecular Organization of Human cGMP Specific Phosphodiesterase 6 (PDE6). <em>Computational and Structural Biotechnology Journal</em>. <a href="https://doi.org/10.1016/j.csbj.2019.03.004" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">MOTTIN, M. et al. (2018). Computational drug discovery for the Zika virus. <em>Brazilian Journal of Pharmaceutical Sciences</em>. <a href="https://doi.org/10.1590/s2175-97902018000001002" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">GÓMEZ, M.M. et al. (2018). Genomic and structural features of the yellow fever virus from the 2016–2017 Brazilian outbreak. <em>Journal of General Virology</em>. <a href="https://doi.org/10.1099/jgv.0.001033" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">MARTINS, L.C. et al. (2018). Investigation of the binding mode of a novel cruzain inhibitor. <em>Journal of Computer-Aided Molecular Design</em>.</li>
+                    <li class="pub-item">MOTTIN, M. et al. (2018). The A–Z of Zika drug discovery. <em>Drug Discovery Today</em>. <a href="https://doi.org/10.1016/j.drudis.2018.06.014" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">SODERO, A.C.R. et al. (2017). Insights into cytochrome bc1 complex binding mode of antimalarial 2-hydroxy-1,4-naphthoquinones. <em>Memorias do Instituto Oswaldo Cruz</em>. <a href="https://doi.org/10.1590/0074-02760160417" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">TORRES, P.H.M. et al. (2016). Alternative Model for RND-Type Efflux Pump. <em>Journal of the Brazilian Chemical Society</em>. <a href="https://doi.org/10.5935/0103-5053.20160125" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">COSTA, L.B. et al. (2016). Compound profiling and 3D-QSAR studies of hydrazone derivatives with activity against intracellular <em>Trypanosoma cruzi</em>. <em>Bioorganic &amp; Medicinal Chemistry</em>. <a href="https://doi.org/10.1016/j.bmc.2016.02.027" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">SOARES, R.O. et al. (2016). Dataset showing the impact of the protonation states on molecular dynamics of HIV protease. <em>Data in Brief</em>. <a href="https://doi.org/10.1016/j.dib.2016.07.040" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">SOARES, R.O. et al. (2016). Unraveling HIV Protease Flaps Dynamics by Constant pH Molecular Dynamics Simulations. <em>Journal of Structural Biology</em>. <a href="https://doi.org/10.1016/j.jsb.2016.06.006" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">DE OLIVEIRA, V.M. et al. (2014). New treatments for Chagas disease and the relationship between chagasic patients and cancers. <em>Cancer Research Journal</em>. <a href="https://doi.org/10.11648/j.crj.s.2014020601.12" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">HOELZ, L.V.B. et al. (2013). G Protein-Coupled Receptors. <em>Revista Virtual de Química</em>.</li>
+                    <li class="pub-item">TORRES, P.H.M. et al. (2011). Structural analysis of the N-terminal fragment of the antiangiogenic protein endostatin. <em>Proteins</em>. <a href="https://doi.org/10.1002/prot.23096" target="_blank">[DOI]</a></li>
+                </ul>
+
+                <h3 class="section-title section-gap">Book Chapters</h3>
+                <ul class="pub-list">
+                    <li class="pub-item">Waman, V.P. et al. (2020). The Genome3D Consortium for Structural Annotations of Selected Model Organisms. In: <em>Methods in Molecular Biology</em>. <a href="https://doi.org/10.1007/978-1-0716-0708-4_3" target="_blank">[DOI]</a></li>
+                    <li class="pub-item">HOELZ, L.V.B. et al. (2015). G Protein-Coupled Receptors. In: <em>Compendium of Medicinal Chemistry</em>.</li>
+                </ul>
+
+                <h3 class="section-title section-gap">Abstracts in Event Proceedings</h3>
+                <ul class="pub-list">
+                    <li class="pub-item">TORRES, P.H.M. et al. (2010). Conformational Analysis of an Antiangiogenic and Antitumor Endostatin-Derived Peptide. In: <em>II INBEB Annual Meeting</em>.</li>
+                    <li class="pub-item">TORRES, P.H.M. et al. (2010). Conformational Analysis of an Antiangiogenic and Antitumor Endostatin-Derived Peptide. In: <em>3rd Latin American Protein Society Meeting</em>.</li>
+                    <li class="pub-item">TORRES, P.H.M. et al. (2010). Molecular Dynamics Assisted Planning of Antiangiogenic Peptides Based on Endostatin. In: <em>III Latin American Postgraduate Program of Biophysics Course</em>.</li>
+                </ul>
             </div>
 
+            <!-- Contact EN -->
             <div id="contato-en" class="tab-content">
-                <h3>Contact Me</h3>
-                
-                <p><strong>Alternative Email:</strong> <a href="mailto:monteirotorres@biof.ufrj.br">monteirotorres@biof.ufrj.br</a></p>
-                
-                <p><strong>Lattes:</strong> <a href="http://lattes.cnpq.br/4188974374017863" target="_blank">http://lattes.cnpq.br/4188974374017863</a></p>
-                <p><strong>Orcid:</strong> <a href="https://orcid.org/0000-0002-0945-1495" target="_blank">https://orcid.org/0000-0002-0945-1495</a></p>
+                <h3 class="section-title">Get in Touch</h3>
+                <div class="contact-grid">
+                    <a href="mailto:monteirotorres@biof.ufrj.br" class="contact-card">
+                        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                        <div>
+                            <div class="contact-label">Email</div>
+                            <div class="contact-value">monteirotorres@biof.ufrj.br</div>
+                        </div>
+                    </a>
+                    <a href="http://lattes.cnpq.br/4188974374017863" target="_blank" class="contact-card">
+                        <div class="contact-icon"><i class="fas fa-graduation-cap"></i></div>
+                        <div>
+                            <div class="contact-label">Lattes CV</div>
+                            <div class="contact-value">View CNPq profile</div>
+                        </div>
+                    </a>
+                    <a href="https://orcid.org/0000-0002-0945-1495" target="_blank" class="contact-card">
+                        <div class="contact-icon"><i class="fab fa-orcid"></i></div>
+                        <div>
+                            <div class="contact-label">ORCID</div>
+                            <div class="contact-value">0000-0002-0945-1495</div>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
         function openTab(evt, tabName) {
-            var i, tabcontent, tablinks;
-            // Get the closest parent that is a language content div
-            const languageContentDiv = evt.currentTarget.closest('.cv-language-content');
-
-            // Get all elements with class="tab-content" within the current language content and hide them
-            tabcontent = languageContentDiv.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-            // Get all elements with class="tab-button" within the current language content and remove the class "active"
-            tablinks = languageContentDiv.getElementsByClassName("tab-button");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-            // Show the current tab, and add an "active" class to the button that opened the tab
-            document.getElementById(tabName).style.display = "block";
-            evt.currentTarget.className += " active";
+            const parent = evt.currentTarget.closest('.cv-language-content');
+            Array.from(parent.getElementsByClassName('tab-content')).forEach(el => el.classList.remove('active'));
+            Array.from(parent.getElementsByClassName('tab-button')).forEach(el => el.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            evt.currentTarget.classList.add('active');
         }
 
         function setLanguage(lang) {
-            document.getElementById('cv-pt').classList.remove('active');
-            document.getElementById('cv-en').classList.remove('active');
-            document.getElementById('flag-pt').classList.remove('active');
-            document.getElementById('flag-en').classList.remove('active');
-
-            if (lang === 'pt') {
-                document.getElementById('cv-pt').classList.add('active');
-                document.getElementById('flag-pt').classList.add('active');
-                document.documentElement.lang = 'pt-BR';
-                // Activate the first tab for Portuguese content
-                document.querySelector('#cv-pt .tab-button').click();
-            } else {
-                document.getElementById('cv-en').classList.add('active');
-                document.getElementById('flag-en').classList.add('active');
-                document.documentElement.lang = 'en';
-                // Activate the first tab for English content
-                document.querySelector('#cv-en .tab-button').click();
-            }
+            ['pt', 'en'].forEach(l => {
+                document.getElementById('cv-' + l).classList.remove('active');
+                document.getElementById('flag-' + l).classList.remove('active');
+            });
+            document.getElementById('cv-' + lang).classList.add('active');
+            document.getElementById('flag-' + lang).classList.add('active');
+            document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en';
+            document.querySelector('#cv-' + lang + ' .tab-button').click();
         }
 
-        // Initialize with English as active and set flag on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            setLanguage('en');
-        });
+        document.addEventListener('DOMContentLoaded', () => setLanguage('en'));
     </script>
 </body>
 </html>
