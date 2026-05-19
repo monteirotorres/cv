@@ -396,6 +396,55 @@
             word-break: break-all;
         }
 
+        /* Keywords */
+        .keywords-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .keyword-tag {
+            background: var(--accent-light);
+            color: var(--accent);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 4px 14px;
+            font-size: 0.8em;
+            font-weight: 500;
+            letter-spacing: 0.2px;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .keyword-tag:hover {
+            border-color: var(--accent-vivid);
+            background: var(--accent-light);
+        }
+
+        /* Funding */
+        .funding-item {
+            padding: 14px 16px;
+            margin-bottom: 9px;
+            background: var(--accent-light);
+            border-radius: 9px;
+            border-left: 3px solid var(--accent-vivid);
+            font-size: 0.88em;
+            line-height: 1.6;
+            transition: background 0.3s;
+        }
+
+        .funding-item strong {
+            display: block;
+            color: var(--primary);
+            font-size: 0.95em;
+            margin-bottom: 3px;
+        }
+
+        .funding-meta {
+            color: var(--text-light);
+            font-size: 0.85em;
+        }
+
         /* Responsive */
         @media (max-width: 620px) {
             body { padding: 10px; }
@@ -438,7 +487,15 @@
             <div id="perfil-pt" class="tab-content active">
                 <h3 class="section-title">Sobre</h3>
                 <p class="about-text">Pesquisador e professor com vasta experiência em Microbiologia, Bioquímica e Biofísica, atuando principalmente nas áreas de biologia estrutural computacional, desenho de fármacos e bioinformática. Atualmente Professor Adjunto no Instituto de Biofísica Carlos Chagas Filho (UFRJ).</p>
-                <h3 class="section-title">Prêmios e Títulos</h3>
+                <div class="keywords-row">
+                    <span class="keyword-tag">Desenho de fármacos</span>
+                    <span class="keyword-tag">Biologia computacional</span>
+                    <span class="keyword-tag">Estrutura de proteínas</span>
+                    <span class="keyword-tag">Biofísica molecular</span>
+                    <span class="keyword-tag">Docking molecular</span>
+                    <span class="keyword-tag">Quimioinformática</span>
+                </div>
+                <h3 class="section-title section-gap">Prêmios e Títulos</h3>
                 <ul class="awards-list">
                     <li>Jovem Cientista do Nosso Estado, FAPERJ (2023)</li>
                     <li>Moção de Louvor pela organização do 3° Curso de Verão em Biofísica, IBCCF - UFRJ (2016)</li>
@@ -483,6 +540,23 @@
                         <div class="timeline-sub">UERJ &nbsp;·&nbsp; 2013 – 2014</div>
                     </div>
                 </div>
+                <h3 class="section-title section-gap">Financiamentos</h3>
+                <div class="funding-item">
+                    <strong>Centro Multiusuário Darcy Fontoura de Almeida: do desenvolvimento de modelos animais a análises biofísicas e de biomoléculas na saúde e na doença</strong>
+                    <span class="funding-meta">FINEP &nbsp;·&nbsp; Nº 1368/24 &nbsp;·&nbsp; 2025 – presente</span>
+                </div>
+                <div class="funding-item">
+                    <strong>Buscando Novos Compostos com Potencial Terapêutico: Uma Visão Integrativa da Biologia Computacional</strong>
+                    <span class="funding-meta">FAPERJ &nbsp;·&nbsp; E-26/200.155/2023 &nbsp;·&nbsp; 2023 – 2025</span>
+                </div>
+                <div class="funding-item">
+                    <strong>Desenvolvimento, Integração e Aplicação de Ferramentas Computacionais na Prospecção de Alvos e Compostos com Potencial Terapêutico</strong>
+                    <span class="funding-meta">FAPERJ &nbsp;·&nbsp; E-26/211.545/2021 &nbsp;·&nbsp; 2022 – 2024</span>
+                </div>
+                <div class="funding-item">
+                    <strong>Receptor para Fator de Ativação de Plaquetas (PAF) e Lisofosfatidilcolina (LPC) em <em>Trypanosoma cruzi</em> como Alvo para Quimioterapia Experimental</strong>
+                    <span class="funding-meta">CNPq &nbsp;·&nbsp; 2022 – 2025</span>
+                </div>
             </div>
 
             <div id="publicacoes-pt" class="tab-content">
@@ -491,7 +565,7 @@
                     <li class="pub-item">BANDEIRA, P.T. et al. (2025). Immunolocalization and 3D modeling of three unique proteins belonging to the costa of <em>Tritrichomonas foetus</em>. <em>Parasitology Research</em>. <a href="https://doi.org/10.1007/s00436-025-08466-4" target="_blank">[DOI]</a></li>
                     <li class="pub-item">GOMES, V.M.S. et al. (2025). RND/HAE-1 members in the Pseudomonadota phylum: exploring multidrug resistance. <em>Biophysical Reviews</em>. <a href="https://doi.org/10.1007/s12551-025-01297-8" target="_blank">[DOI]</a></li>
                     <li class="pub-item">DE VASCONCELOS E SOUZA, A. et al. (2024). Gene Expression and Prognostic Value of NADPH Oxidase Enzymes in Breast Cancer. <em>International Journal of Molecular Sciences</em>. <a href="https://doi.org/10.3390/ijms25063464" target="_blank">[DOI]</a></li>
-                    <li class="pub-item">MOTTIN, M. et al. (2022). Chalcones from <em>Angelica keiskei</em> (ashitaba) inhibit key Zika virus replication proteins. <em>Bioorganic Chemistry</em>.</li>
+                    <li class="pub-item">MOTTIN, M. et al. (2022). Chalcones from <em>Angelica keiskei</em> (ashitaba) inhibit key Zika virus replication proteins. <em>Bioorganic Chemistry</em>. <a href="https://doi.org/10.1016/j.bioorg.2022.105649" target="_blank">[DOI]</a></li>
                     <li class="pub-item">COELHO, F.S. et al. (2021). A novel receptor for platelet-activating factor and lysophosphatidylcholine in <em>Trypanosoma cruzi</em>. <em>Molecular Microbiology</em>. <a href="https://doi.org/10.1111/mmi.14778" target="_blank">[DOI]</a></li>
                     <li class="pub-item">ALSULAMI, A.F. et al. (2021). COSMIC Cancer Gene Census 3D database: understanding the impacts of mutations on cancer targets. <em>Briefings in Bioinformatics</em>. <a href="https://doi.org/10.1093/bib/bbab220" target="_blank">[DOI]</a></li>
                     <li class="pub-item">JOFILY, P. et al. (2021). Improving Blind Docking in DOCK6 through an Automated Preliminary Fragment Probing Strategy. <em>Molecules</em>. <a href="https://doi.org/10.3390/molecules26051224" target="_blank">[DOI]</a></li>
@@ -506,7 +580,7 @@
                     <li class="pub-item">MARYAM, A. et al. (2019). The Molecular Organization of Human cGMP Specific Phosphodiesterase 6 (PDE6). <em>Computational and Structural Biotechnology Journal</em>. <a href="https://doi.org/10.1016/j.csbj.2019.03.004" target="_blank">[DOI]</a></li>
                     <li class="pub-item">MOTTIN, M. et al. (2018). Computational drug discovery for the Zika virus. <em>Brazilian Journal of Pharmaceutical Sciences</em>. <a href="https://doi.org/10.1590/s2175-97902018000001002" target="_blank">[DOI]</a></li>
                     <li class="pub-item">GÓMEZ, M.M. et al. (2018). Genomic and structural features of the yellow fever virus from the 2016–2017 Brazilian outbreak. <em>Journal of General Virology</em>. <a href="https://doi.org/10.1099/jgv.0.001033" target="_blank">[DOI]</a></li>
-                    <li class="pub-item">MARTINS, L.C. et al. (2018). Investigation of the binding mode of a novel cruzain inhibitor. <em>Journal of Computer-Aided Molecular Design</em>.</li>
+                    <li class="pub-item">MARTINS, L.C. et al. (2018). Investigation of the binding mode of a novel cruzain inhibitor by docking, molecular dynamics, ab initio and MM/PBSA calculations. <em>Journal of Computer-Aided Molecular Design</em>. <a href="https://doi.org/10.1007/s10822-018-0112-3" target="_blank">[DOI]</a></li>
                     <li class="pub-item">MOTTIN, M. et al. (2018). The A–Z of Zika drug discovery. <em>Drug Discovery Today</em>. <a href="https://doi.org/10.1016/j.drudis.2018.06.014" target="_blank">[DOI]</a></li>
                     <li class="pub-item">SODERO, A.C.R. et al. (2017). Insights into cytochrome bc1 complex binding mode of antimalarial 2-hydroxy-1,4-naphthoquinones. <em>Memorias do Instituto Oswaldo Cruz</em>. <a href="https://doi.org/10.1590/0074-02760160417" target="_blank">[DOI]</a></li>
                     <li class="pub-item">TORRES, P.H.M. et al. (2016). Alternative Model for RND-Type Efflux Pump. <em>Journal of the Brazilian Chemical Society</em>. <a href="https://doi.org/10.5935/0103-5053.20160125" target="_blank">[DOI]</a></li>
@@ -514,8 +588,12 @@
                     <li class="pub-item">SOARES, R.O. et al. (2016). Dataset showing the impact of the protonation states on molecular dynamics of HIV protease. <em>Data in Brief</em>. <a href="https://doi.org/10.1016/j.dib.2016.07.040" target="_blank">[DOI]</a></li>
                     <li class="pub-item">SOARES, R.O. et al. (2016). Unraveling HIV Protease Flaps Dynamics by Constant pH Molecular Dynamics Simulations. <em>Journal of Structural Biology</em>. <a href="https://doi.org/10.1016/j.jsb.2016.06.006" target="_blank">[DOI]</a></li>
                     <li class="pub-item">DE OLIVEIRA, V.M. et al. (2014). New treatments for Chagas disease and the relationship between chagasic patients and cancers. <em>Cancer Research Journal</em>. <a href="https://doi.org/10.11648/j.crj.s.2014020601.12" target="_blank">[DOI]</a></li>
-                    <li class="pub-item">HOELZ, L.V.B. et al. (2013). G Protein-Coupled Receptors. <em>Revista Virtual de Química</em>.</li>
+                    <li class="pub-item">HOELZ, L.V.B. et al. (2013). G Protein-Coupled Receptors. <em>Revista Virtual de Química</em>. <a href="https://doi.org/10.5935/1984-6835.20130071" target="_blank">[DOI]</a></li>
                     <li class="pub-item">TORRES, P.H.M. et al. (2011). Structural analysis of the N-terminal fragment of the antiangiogenic protein endostatin. <em>Proteins</em>. <a href="https://doi.org/10.1002/prot.23096" target="_blank">[DOI]</a></li>
+                </ul>
+                <h3 class="section-title section-gap">Preprints</h3>
+                <ul class="pub-list">
+                    <li class="pub-item">SKWARK, M.J. et al. (2019). Analysis of metabolic pathways in mycobacteria to aid drug-target identification. <em>bioRxiv</em>. <a href="https://doi.org/10.1101/535856" target="_blank">[DOI]</a></li>
                 </ul>
                 <h3 class="section-title section-gap">Capítulos de Livros</h3>
                 <ul class="pub-list">
@@ -554,6 +632,27 @@
                             <div class="contact-value">0000-0002-0945-1495</div>
                         </div>
                     </a>
+                    <a href="http://lmdm.biof.ufrj.br/en/" target="_blank" class="contact-card">
+                        <div class="contact-icon"><i class="fas fa-flask"></i></div>
+                        <div>
+                            <div class="contact-label">Laboratório</div>
+                            <div class="contact-value">LMDM – UFRJ</div>
+                        </div>
+                    </a>
+                    <a href="http://www.researcherid.com/rid/C-7657-2015" target="_blank" class="contact-card">
+                        <div class="contact-icon"><i class="fas fa-id-badge"></i></div>
+                        <div>
+                            <div class="contact-label">ResearcherID</div>
+                            <div class="contact-value">C-7657-2015</div>
+                        </div>
+                    </a>
+                    <a href="http://www.scopus.com/inward/authorDetails.url?authorID=57150247900&partnerID=MN8TOARS" target="_blank" class="contact-card">
+                        <div class="contact-icon"><i class="fas fa-book-open"></i></div>
+                        <div>
+                            <div class="contact-label">Scopus Author ID</div>
+                            <div class="contact-value">57150247900</div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -578,7 +677,15 @@
             <div id="perfil-en" class="tab-content active">
                 <h3 class="section-title">About</h3>
                 <p class="about-text">Researcher and professor with extensive experience in Microbiology, Biochemistry and Biophysics, working mainly in the areas of computational structural biology, drug design and bioinformatics. Currently Associate Professor at the Carlos Chagas Filho Institute of Biophysics (UFRJ).</p>
-                <h3 class="section-title">Awards &amp; Honours</h3>
+                <div class="keywords-row">
+                    <span class="keyword-tag">Drug design</span>
+                    <span class="keyword-tag">Computational biology</span>
+                    <span class="keyword-tag">Protein structure</span>
+                    <span class="keyword-tag">Molecular biophysics</span>
+                    <span class="keyword-tag">Molecular docking</span>
+                    <span class="keyword-tag">Chemoinformatics</span>
+                </div>
+                <h3 class="section-title section-gap">Awards &amp; Honours</h3>
                 <ul class="awards-list">
                     <li>Young Scientist of Our State, FAPERJ (2023)</li>
                     <li>Vote of Commendation for the organisation of the 3rd Biophysics Summer Course, IBCCF - UFRJ (2016)</li>
@@ -623,6 +730,23 @@
                         <div class="timeline-sub">UERJ &nbsp;·&nbsp; 2013 – 2014</div>
                     </div>
                 </div>
+                <h3 class="section-title section-gap">Funding</h3>
+                <div class="funding-item">
+                    <strong>Darcy Fontoura de Almeida Multiuser Center: from the development of animal models to biophysical and biomolecular analyses in health and disease</strong>
+                    <span class="funding-meta">FINEP &nbsp;·&nbsp; No. 1368/24 &nbsp;·&nbsp; 2025 – present</span>
+                </div>
+                <div class="funding-item">
+                    <strong>Searching for New Compounds with Therapeutic Potential: An Integrative View of Computational Biology</strong>
+                    <span class="funding-meta">FAPERJ &nbsp;·&nbsp; E-26/200.155/2023 &nbsp;·&nbsp; 2023 – 2025</span>
+                </div>
+                <div class="funding-item">
+                    <strong>Development, Integration and Application of Computational Tools in the Prospecting of Targets and Compounds with Therapeutic Potential</strong>
+                    <span class="funding-meta">FAPERJ &nbsp;·&nbsp; E-26/211.545/2021 &nbsp;·&nbsp; 2022 – 2024</span>
+                </div>
+                <div class="funding-item">
+                    <strong>Receptor for Platelet Activating Factor (PAF) and Lysophosphatidylcholine (LPC) in <em>Trypanosoma cruzi</em> as a Target for Experimental Chemotherapy</strong>
+                    <span class="funding-meta">CNPq &nbsp;·&nbsp; 2022 – 2025</span>
+                </div>
             </div>
 
             <div id="publicacoes-en" class="tab-content">
@@ -631,7 +755,7 @@
                     <li class="pub-item">BANDEIRA, P.T. et al. (2025). Immunolocalization and 3D modeling of three unique proteins belonging to the costa of <em>Tritrichomonas foetus</em>. <em>Parasitology Research</em>. <a href="https://doi.org/10.1007/s00436-025-08466-4" target="_blank">[DOI]</a></li>
                     <li class="pub-item">GOMES, V.M.S. et al. (2025). RND/HAE-1 members in the Pseudomonadota phylum: exploring multidrug resistance. <em>Biophysical Reviews</em>. <a href="https://doi.org/10.1007/s12551-025-01297-8" target="_blank">[DOI]</a></li>
                     <li class="pub-item">DE VASCONCELOS E SOUZA, A. et al. (2024). Gene Expression and Prognostic Value of NADPH Oxidase Enzymes in Breast Cancer. <em>International Journal of Molecular Sciences</em>. <a href="https://doi.org/10.3390/ijms25063464" target="_blank">[DOI]</a></li>
-                    <li class="pub-item">MOTTIN, M. et al. (2022). Chalcones from <em>Angelica keiskei</em> (ashitaba) inhibit key Zika virus replication proteins. <em>Bioorganic Chemistry</em>.</li>
+                    <li class="pub-item">MOTTIN, M. et al. (2022). Chalcones from <em>Angelica keiskei</em> (ashitaba) inhibit key Zika virus replication proteins. <em>Bioorganic Chemistry</em>. <a href="https://doi.org/10.1016/j.bioorg.2022.105649" target="_blank">[DOI]</a></li>
                     <li class="pub-item">COELHO, F.S. et al. (2021). A novel receptor for platelet-activating factor and lysophosphatidylcholine in <em>Trypanosoma cruzi</em>. <em>Molecular Microbiology</em>. <a href="https://doi.org/10.1111/mmi.14778" target="_blank">[DOI]</a></li>
                     <li class="pub-item">ALSULAMI, A.F. et al. (2021). COSMIC Cancer Gene Census 3D database: understanding the impacts of mutations on cancer targets. <em>Briefings in Bioinformatics</em>. <a href="https://doi.org/10.1093/bib/bbab220" target="_blank">[DOI]</a></li>
                     <li class="pub-item">JOFILY, P. et al. (2021). Improving Blind Docking in DOCK6 through an Automated Preliminary Fragment Probing Strategy. <em>Molecules</em>. <a href="https://doi.org/10.3390/molecules26051224" target="_blank">[DOI]</a></li>
@@ -646,7 +770,7 @@
                     <li class="pub-item">MARYAM, A. et al. (2019). The Molecular Organization of Human cGMP Specific Phosphodiesterase 6 (PDE6). <em>Computational and Structural Biotechnology Journal</em>. <a href="https://doi.org/10.1016/j.csbj.2019.03.004" target="_blank">[DOI]</a></li>
                     <li class="pub-item">MOTTIN, M. et al. (2018). Computational drug discovery for the Zika virus. <em>Brazilian Journal of Pharmaceutical Sciences</em>. <a href="https://doi.org/10.1590/s2175-97902018000001002" target="_blank">[DOI]</a></li>
                     <li class="pub-item">GÓMEZ, M.M. et al. (2018). Genomic and structural features of the yellow fever virus from the 2016–2017 Brazilian outbreak. <em>Journal of General Virology</em>. <a href="https://doi.org/10.1099/jgv.0.001033" target="_blank">[DOI]</a></li>
-                    <li class="pub-item">MARTINS, L.C. et al. (2018). Investigation of the binding mode of a novel cruzain inhibitor. <em>Journal of Computer-Aided Molecular Design</em>.</li>
+                    <li class="pub-item">MARTINS, L.C. et al. (2018). Investigation of the binding mode of a novel cruzain inhibitor by docking, molecular dynamics, ab initio and MM/PBSA calculations. <em>Journal of Computer-Aided Molecular Design</em>. <a href="https://doi.org/10.1007/s10822-018-0112-3" target="_blank">[DOI]</a></li>
                     <li class="pub-item">MOTTIN, M. et al. (2018). The A–Z of Zika drug discovery. <em>Drug Discovery Today</em>. <a href="https://doi.org/10.1016/j.drudis.2018.06.014" target="_blank">[DOI]</a></li>
                     <li class="pub-item">SODERO, A.C.R. et al. (2017). Insights into cytochrome bc1 complex binding mode of antimalarial 2-hydroxy-1,4-naphthoquinones. <em>Memorias do Instituto Oswaldo Cruz</em>. <a href="https://doi.org/10.1590/0074-02760160417" target="_blank">[DOI]</a></li>
                     <li class="pub-item">TORRES, P.H.M. et al. (2016). Alternative Model for RND-Type Efflux Pump. <em>Journal of the Brazilian Chemical Society</em>. <a href="https://doi.org/10.5935/0103-5053.20160125" target="_blank">[DOI]</a></li>
@@ -654,8 +778,12 @@
                     <li class="pub-item">SOARES, R.O. et al. (2016). Dataset showing the impact of the protonation states on molecular dynamics of HIV protease. <em>Data in Brief</em>. <a href="https://doi.org/10.1016/j.dib.2016.07.040" target="_blank">[DOI]</a></li>
                     <li class="pub-item">SOARES, R.O. et al. (2016). Unraveling HIV Protease Flaps Dynamics by Constant pH Molecular Dynamics Simulations. <em>Journal of Structural Biology</em>. <a href="https://doi.org/10.1016/j.jsb.2016.06.006" target="_blank">[DOI]</a></li>
                     <li class="pub-item">DE OLIVEIRA, V.M. et al. (2014). New treatments for Chagas disease and the relationship between chagasic patients and cancers. <em>Cancer Research Journal</em>. <a href="https://doi.org/10.11648/j.crj.s.2014020601.12" target="_blank">[DOI]</a></li>
-                    <li class="pub-item">HOELZ, L.V.B. et al. (2013). G Protein-Coupled Receptors. <em>Revista Virtual de Química</em>.</li>
+                    <li class="pub-item">HOELZ, L.V.B. et al. (2013). G Protein-Coupled Receptors. <em>Revista Virtual de Química</em>. <a href="https://doi.org/10.5935/1984-6835.20130071" target="_blank">[DOI]</a></li>
                     <li class="pub-item">TORRES, P.H.M. et al. (2011). Structural analysis of the N-terminal fragment of the antiangiogenic protein endostatin. <em>Proteins</em>. <a href="https://doi.org/10.1002/prot.23096" target="_blank">[DOI]</a></li>
+                </ul>
+                <h3 class="section-title section-gap">Preprints</h3>
+                <ul class="pub-list">
+                    <li class="pub-item">SKWARK, M.J. et al. (2019). Analysis of metabolic pathways in mycobacteria to aid drug-target identification. <em>bioRxiv</em>. <a href="https://doi.org/10.1101/535856" target="_blank">[DOI]</a></li>
                 </ul>
                 <h3 class="section-title section-gap">Book Chapters</h3>
                 <ul class="pub-list">
@@ -692,6 +820,27 @@
                         <div>
                             <div class="contact-label">ORCID</div>
                             <div class="contact-value">0000-0002-0945-1495</div>
+                        </div>
+                    </a>
+                    <a href="http://lmdm.biof.ufrj.br/en/" target="_blank" class="contact-card">
+                        <div class="contact-icon"><i class="fas fa-flask"></i></div>
+                        <div>
+                            <div class="contact-label">Laboratory</div>
+                            <div class="contact-value">LMDM – UFRJ</div>
+                        </div>
+                    </a>
+                    <a href="http://www.researcherid.com/rid/C-7657-2015" target="_blank" class="contact-card">
+                        <div class="contact-icon"><i class="fas fa-id-badge"></i></div>
+                        <div>
+                            <div class="contact-label">ResearcherID</div>
+                            <div class="contact-value">C-7657-2015</div>
+                        </div>
+                    </a>
+                    <a href="http://www.scopus.com/inward/authorDetails.url?authorID=57150247900&partnerID=MN8TOARS" target="_blank" class="contact-card">
+                        <div class="contact-icon"><i class="fas fa-book-open"></i></div>
+                        <div>
+                            <div class="contact-label">Scopus Author ID</div>
+                            <div class="contact-value">57150247900</div>
                         </div>
                     </a>
                 </div>
