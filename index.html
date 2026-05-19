@@ -12,8 +12,7 @@
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         /* ===== LIGHT MODE ===== */
-        /* --accent-vivid: #b3b833 (the requested color, decorative use)
-           --accent: darker variant for text, contrast 5.1:1 on white       */
+        /* #b3b833 is decorative only (borders/dots). Text accents use #6c7010 (5:1 on white). */
         :root {
             --primary:       #26280a;
             --accent:        #6c7010;
@@ -30,26 +29,30 @@
             --tab-bg:        #ffffff;
             --toggle-bg:     #6c7010;
             --toggle-color:  #ffffff;
+            --icon-bg:       #6c7010;
+            --icon-color:    #ffffff;
         }
 
         /* ===== DARK MODE ===== */
-        /* --accent: #b3b833 is 8:1 contrast on --card, perfect for dark mode */
+        /* Background is near-black neutral. Only accents (#b3b833) carry the color. */
         [data-theme="dark"] {
-            --primary:       #d4d658;
+            --primary:       #f0f0f0;
             --accent:        #b3b833;
             --accent-vivid:  #b3b833;
-            --accent-light:  #1c1e06;
-            --text:          #e2e2b2;
-            --text-light:    #888a38;
-            --border:        #2e300e;
-            --bg:            #131406;
-            --card:          #1a1c08;
-            --header-from:   #0c0e02;
-            --header-to:     #1e2006;
-            --shadow:        rgba(0, 0, 0, 0.48);
-            --tab-bg:        #1a1c08;
+            --accent-light:  #1e1e1e;
+            --text:          #e0e0e0;
+            --text-light:    #888888;
+            --border:        #2a2a2a;
+            --bg:            #0d0d0d;
+            --card:          #161616;
+            --header-from:   #0d0d0d;
+            --header-to:     #1c1c1c;
+            --shadow:        rgba(0, 0, 0, 0.65);
+            --tab-bg:        #161616;
             --toggle-bg:     #b3b833;
-            --toggle-color:  #131406;
+            --toggle-color:  #0d0d0d;
+            --icon-bg:       #222222;
+            --icon-color:    #b3b833;
         }
 
         body {
@@ -142,7 +145,7 @@
             position: absolute;
             top: -60px; right: -60px;
             width: 300px; height: 300px;
-            background: rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.04);
             border-radius: 50%;
             pointer-events: none;
         }
@@ -152,7 +155,7 @@
             border-radius: 50%;
             object-fit: cover;
             border: 4px solid rgba(255,255,255,0.82);
-            box-shadow: 0 6px 24px rgba(0,0,0,0.35);
+            box-shadow: 0 6px 24px rgba(0,0,0,0.4);
             flex-shrink: 0;
             position: relative; z-index: 1;
         }
@@ -170,7 +173,7 @@
         .header-info h2 {
             font-size: 1em;
             font-weight: 400;
-            opacity: 0.82;
+            opacity: 0.75;
         }
 
         /* ===== NAVIGATION ===== */
@@ -366,15 +369,15 @@
 
         .contact-icon {
             width: 42px; height: 42px;
-            background: var(--accent);
-            color: #fff;
+            background: var(--icon-bg);
+            color: var(--icon-color);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1em;
             flex-shrink: 0;
-            transition: background 0.3s;
+            transition: background 0.3s, color 0.3s;
         }
 
         .contact-label {
