@@ -175,6 +175,33 @@
             font-size: 1em;
             font-weight: 400;
             opacity: 0.75;
+            margin-bottom: 14px;
+        }
+
+        .header-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .header-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 6px 13px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.22);
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.8em;
+            font-weight: 500;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .header-links a:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
         }
 
         /* ===== NAVIGATION ===== */
@@ -478,6 +505,10 @@
                 <div class="header-info">
                     <h1>Pedro Henrique Monteiro Torres</h1>
                     <h2>Pesquisador &amp; Professor Adjunto &nbsp;·&nbsp; UFRJ</h2>
+                    <div class="header-links">
+                        <a href="http://lattes.cnpq.br/4188974374017863" target="_blank"><i class="fas fa-graduation-cap"></i> Currículo Lattes</a>
+                        <a href="https://orcid.org/0000-0002-0945-1495" target="_blank"><i class="fab fa-orcid"></i> ORCID</a>
+                    </div>
                 </div>
             </div>
 
@@ -668,6 +699,10 @@
                 <div class="header-info">
                     <h1>Pedro Henrique Monteiro Torres</h1>
                     <h2>Researcher &amp; Associate Professor &nbsp;·&nbsp; UFRJ</h2>
+                    <div class="header-links">
+                        <a href="http://lattes.cnpq.br/4188974374017863" target="_blank"><i class="fas fa-graduation-cap"></i> Lattes CV</a>
+                        <a href="https://orcid.org/0000-0002-0945-1495" target="_blank"><i class="fab fa-orcid"></i> ORCID</a>
+                    </div>
                 </div>
             </div>
 
