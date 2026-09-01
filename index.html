@@ -13,7 +13,6 @@
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         /* ===== LIGHT MODE ===== */
-        /* #b3b833 is decorative only (borders/dots). Text accents use #6c7010 (5:1 on white). */
         :root {
             --primary:       #26280a;
             --accent:        #6c7010;
@@ -35,7 +34,28 @@
         }
 
         /* ===== DARK MODE ===== */
-        /* Background is near-black neutral. Only accents (#b3b833) carry the color. */
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --primary:       #f0f0f0;
+                --accent:        #b3b833;
+                --accent-vivid:  #b3b833;
+                --accent-light:  #1e1e1e;
+                --text:          #e0e0e0;
+                --text-light:    #888888;
+                --border:        #2a2a2a;
+                --bg:            #0d0d0d;
+                --card:          #161616;
+                --header-from:   #0d0d0d;
+                --header-to:     #1c1c1c;
+                --shadow:        rgba(0, 0, 0, 0.65);
+                --tab-bg:        #161616;
+                --toggle-bg:     #b3b833;
+                --toggle-color:  #0d0d0d;
+                --icon-bg:       #222222;
+                --icon-color:    #b3b833;
+            }
+        }
+
         [data-theme="dark"] {
             --primary:       #f0f0f0;
             --accent:        #b3b833;
@@ -93,6 +113,7 @@
             box-shadow: 0 2px 8px var(--shadow);
             transition: background 0.3s, color 0.3s, transform 0.2s;
             flex-shrink: 0;
+            text-decoration: none;
         }
 
         .theme-toggle:hover { transform: scale(1.1); }
@@ -509,8 +530,9 @@
                 <img src="foto.jpg" alt="Pedro Henrique Monteiro Torres" class="profile-pic">
                 <div class="header-info">
                     <h1>Pedro Henrique Monteiro Torres</h1>
-                    <h2>Pesquisador &amp; Professor Adjunto &nbsp;·&nbsp; UFRJ</h2>
+                    <h2>Pesquisador &amp; Professor Adjunto &nbsp;&middot;&nbsp; UFRJ</h2>
                     <div class="header-links">
+                        <a href="https://github.com/monteirotorres" target="_blank"><i class="fab fa-github"></i> GitHub</a>
                         <a href="http://lattes.cnpq.br/4188974374017863" target="_blank"><i class="fas fa-graduation-cap"></i> Currículo Lattes</a>
                         <a href="https://orcid.org/0000-0002-0945-1495" target="_blank"><i class="fab fa-orcid"></i> ORCID</a>
                     </div>
@@ -550,52 +572,52 @@
                 <div class="timeline">
                     <div class="timeline-item">
                         <div class="timeline-title">Doutorado em Ciências Biológicas (Biofísica)</div>
-                        <div class="timeline-sub">Universidade Federal do Rio de Janeiro (UFRJ) &nbsp;·&nbsp; 2014</div>
+                        <div class="timeline-sub">Universidade Federal do Rio de Janeiro (UFRJ) &nbsp;&middot;&nbsp; 2014</div>
                     </div>
                     <div class="timeline-item">
                         <div class="timeline-title">Mestrado em Ciências Biológicas (Biofísica)</div>
-                        <div class="timeline-sub">Universidade Federal do Rio de Janeiro (UFRJ) &nbsp;·&nbsp; 2010</div>
+                        <div class="timeline-sub">Universidade Federal do Rio de Janeiro (UFRJ) &nbsp;&middot;&nbsp; 2010</div>
                     </div>
                     <div class="timeline-item">
                         <div class="timeline-title">Graduação em Ciências Biológicas: Microbiologia e Imunologia</div>
-                        <div class="timeline-sub">Universidade Federal do Rio de Janeiro (UFRJ) &nbsp;·&nbsp; 2008</div>
+                        <div class="timeline-sub">Universidade Federal do Rio de Janeiro (UFRJ) &nbsp;&middot;&nbsp; 2008</div>
                     </div>
                 </div>
                 <h3 class="section-title section-gap">Experiência Profissional</h3>
                 <div class="timeline">
                     <div class="timeline-item">
                         <div class="timeline-title">Professor Adjunto</div>
-                        <div class="timeline-sub">UFRJ &nbsp;·&nbsp; Mar 2020 – Atual</div>
+                        <div class="timeline-sub">UFRJ &nbsp;&middot;&nbsp; Mar 2020 – Atual</div>
                     </div>
                     <div class="timeline-item">
                         <div class="timeline-title">Pesquisador Associado</div>
-                        <div class="timeline-sub">University of Cambridge &nbsp;·&nbsp; 2018 – 2020</div>
+                        <div class="timeline-sub">University of Cambridge &nbsp;&middot;&nbsp; 2018 – 2020</div>
                     </div>
                     <div class="timeline-item">
                         <div class="timeline-title">Pesquisador (Programa de Computação Científica)</div>
-                        <div class="timeline-sub">Fiocruz &nbsp;·&nbsp; 2016 – 2018</div>
+                        <div class="timeline-sub">Fiocruz &nbsp;&middot;&nbsp; 2016 – 2018</div>
                     </div>
                     <div class="timeline-item">
                         <div class="timeline-title">Professor Substituto</div>
-                        <div class="timeline-sub">UERJ &nbsp;·&nbsp; 2013 – 2014</div>
+                        <div class="timeline-sub">UERJ &nbsp;&middot;&nbsp; 2013 – 2014</div>
                     </div>
                 </div>
                 <h3 class="section-title section-gap">Financiamentos</h3>
                 <div class="funding-item">
                     <strong>Centro Multiusuário Darcy Fontoura de Almeida: do desenvolvimento de modelos animais a análises biofísicas e de biomoléculas na saúde e na doença</strong>
-                    <span class="funding-meta">FINEP &nbsp;·&nbsp; Nº 1368/24 &nbsp;·&nbsp; 2025 – presente</span>
+                    <span class="funding-meta">FINEP &nbsp;&middot;&nbsp; Nº 1368/24 &nbsp;&middot;&nbsp; 2025 – presente</span>
                 </div>
                 <div class="funding-item">
                     <strong>Buscando Novos Compostos com Potencial Terapêutico: Uma Visão Integrativa da Biologia Computacional</strong>
-                    <span class="funding-meta">FAPERJ &nbsp;·&nbsp; E-26/200.155/2023 &nbsp;·&nbsp; 2023 – 2025</span>
+                    <span class="funding-meta">FAPERJ &nbsp;&middot;&nbsp; E-26/200.155/2023 &nbsp;&middot;&nbsp; 2023 – 2025</span>
                 </div>
                 <div class="funding-item">
                     <strong>Desenvolvimento, Integração e Aplicação de Ferramentas Computacionais na Prospecção de Alvos e Compostos com Potencial Terapêutico</strong>
-                    <span class="funding-meta">FAPERJ &nbsp;·&nbsp; E-26/211.545/2021 &nbsp;·&nbsp; 2022 – 2024</span>
+                    <span class="funding-meta">FAPERJ &nbsp;&middot;&nbsp; E-26/211.545/2021 &nbsp;&middot;&nbsp; 2022 – 2024</span>
                 </div>
                 <div class="funding-item">
                     <strong>Receptor para Fator de Ativação de Plaquetas (PAF) e Lisofosfatidilcolina (LPC) em <em>Trypanosoma cruzi</em> como Alvo para Quimioterapia Experimental</strong>
-                    <span class="funding-meta">CNPq &nbsp;·&nbsp; 2022 – 2025</span>
+                    <span class="funding-meta">CNPq &nbsp;&middot;&nbsp; 2022 – 2025</span>
                 </div>
             </div>
 
@@ -658,6 +680,13 @@
                             <div class="contact-value">monteirotorres@biof.ufrj.br</div>
                         </div>
                     </a>
+                    <a href="https://github.com/monteirotorres" target="_blank" class="contact-card">
+                        <div class="contact-icon"><i class="fab fa-github"></i></div>
+                        <div>
+                            <div class="contact-label">GitHub</div>
+                            <div class="contact-value">monteirotorres</div>
+                        </div>
+                    </a>
                     <a href="http://lattes.cnpq.br/4188974374017863" target="_blank" class="contact-card">
                         <div class="contact-icon"><i class="fas fa-graduation-cap"></i></div>
                         <div>
@@ -703,8 +732,9 @@
                 <img src="foto.jpg" alt="Pedro Henrique Monteiro Torres" class="profile-pic">
                 <div class="header-info">
                     <h1>Pedro Henrique Monteiro Torres</h1>
-                    <h2>Researcher &amp; Associate Professor &nbsp;·&nbsp; UFRJ</h2>
+                    <h2>Researcher &amp; Associate Professor &nbsp;&middot;&nbsp; UFRJ</h2>
                     <div class="header-links">
+                        <a href="https://github.com/monteirotorres" target="_blank"><i class="fab fa-github"></i> GitHub</a>
                         <a href="http://lattes.cnpq.br/4188974374017863" target="_blank"><i class="fas fa-graduation-cap"></i> Lattes CV</a>
                         <a href="https://orcid.org/0000-0002-0945-1495" target="_blank"><i class="fab fa-orcid"></i> ORCID</a>
                     </div>
@@ -744,52 +774,52 @@
                 <div class="timeline">
                     <div class="timeline-item">
                         <div class="timeline-title">PhD in Biological Sciences (Biophysics)</div>
-                        <div class="timeline-sub">Federal University of Rio de Janeiro (UFRJ) &nbsp;·&nbsp; 2014</div>
+                        <div class="timeline-sub">Federal University of Rio de Janeiro (UFRJ) &nbsp;&middot;&nbsp; 2014</div>
                     </div>
                     <div class="timeline-item">
                         <div class="timeline-title">Master in Biological Sciences (Biophysics)</div>
-                        <div class="timeline-sub">Federal University of Rio de Janeiro (UFRJ) &nbsp;·&nbsp; 2010</div>
+                        <div class="timeline-sub">Federal University of Rio de Janeiro (UFRJ) &nbsp;&middot;&nbsp; 2010</div>
                     </div>
                     <div class="timeline-item">
                         <div class="timeline-title">Bachelor in Biological Sciences: Microbiology and Immunology</div>
-                        <div class="timeline-sub">Federal University of Rio de Janeiro (UFRJ) &nbsp;·&nbsp; 2008</div>
+                        <div class="timeline-sub">Federal University of Rio de Janeiro (UFRJ) &nbsp;&middot;&nbsp; 2008</div>
                     </div>
                 </div>
                 <h3 class="section-title section-gap">Professional Experience</h3>
                 <div class="timeline">
                     <div class="timeline-item">
                         <div class="timeline-title">Associate Professor</div>
-                        <div class="timeline-sub">UFRJ &nbsp;·&nbsp; Mar 2020 – Present</div>
+                        <div class="timeline-sub">UFRJ &nbsp;&middot;&nbsp; Mar 2020 – Present</div>
                     </div>
                     <div class="timeline-item">
                         <div class="timeline-title">Associate Researcher</div>
-                        <div class="timeline-sub">University of Cambridge &nbsp;·&nbsp; 2018 – 2020</div>
+                        <div class="timeline-sub">University of Cambridge &nbsp;&middot;&nbsp; 2018 – 2020</div>
                     </div>
                     <div class="timeline-item">
                         <div class="timeline-title">Researcher (Scientific Computing Program)</div>
-                        <div class="timeline-sub">Fiocruz &nbsp;·&nbsp; 2016 – 2018</div>
+                        <div class="timeline-sub">Fiocruz &nbsp;&middot;&nbsp; 2016 – 2018</div>
                     </div>
                     <div class="timeline-item">
                         <div class="timeline-title">Substitute Professor</div>
-                        <div class="timeline-sub">UERJ &nbsp;·&nbsp; 2013 – 2014</div>
+                        <div class="timeline-sub">UERJ &nbsp;&middot;&nbsp; 2013 – 2014</div>
                     </div>
                 </div>
                 <h3 class="section-title section-gap">Funding</h3>
                 <div class="funding-item">
                     <strong>Darcy Fontoura de Almeida Multiuser Center: from the development of animal models to biophysical and biomolecular analyses in health and disease</strong>
-                    <span class="funding-meta">FINEP &nbsp;·&nbsp; No. 1368/24 &nbsp;·&nbsp; 2025 – present</span>
+                    <span class="funding-meta">FINEP &nbsp;&middot;&nbsp; No. 1368/24 &nbsp;&middot;&nbsp; 2025 – present</span>
                 </div>
                 <div class="funding-item">
                     <strong>Searching for New Compounds with Therapeutic Potential: An Integrative View of Computational Biology</strong>
-                    <span class="funding-meta">FAPERJ &nbsp;·&nbsp; E-26/200.155/2023 &nbsp;·&nbsp; 2023 – 2025</span>
+                    <span class="funding-meta">FAPERJ &nbsp;&middot;&nbsp; E-26/200.155/2023 &nbsp;&middot;&nbsp; 2023 – 2025</span>
                 </div>
                 <div class="funding-item">
                     <strong>Development, Integration and Application of Computational Tools in the Prospecting of Targets and Compounds with Therapeutic Potential</strong>
-                    <span class="funding-meta">FAPERJ &nbsp;·&nbsp; E-26/211.545/2021 &nbsp;·&nbsp; 2022 – 2024</span>
+                    <span class="funding-meta">FAPERJ &nbsp;&middot;&nbsp; E-26/211.545/2021 &nbsp;&middot;&nbsp; 2022 – 2024</span>
                 </div>
                 <div class="funding-item">
                     <strong>Receptor for Platelet Activating Factor (PAF) and Lysophosphatidylcholine (LPC) in <em>Trypanosoma cruzi</em> as a Target for Experimental Chemotherapy</strong>
-                    <span class="funding-meta">CNPq &nbsp;·&nbsp; 2022 – 2025</span>
+                    <span class="funding-meta">CNPq &nbsp;&middot;&nbsp; 2022 – 2025</span>
                 </div>
             </div>
 
@@ -850,6 +880,13 @@
                         <div>
                             <div class="contact-label">Email</div>
                             <div class="contact-value">monteirotorres@biof.ufrj.br</div>
+                        </div>
+                    </a>
+                    <a href="https://github.com/monteirotorres" target="_blank" class="contact-card">
+                        <div class="contact-icon"><i class="fab fa-github"></i></div>
+                        <div>
+                            <div class="contact-label">GitHub</div>
+                            <div class="contact-value">monteirotorres</div>
                         </div>
                     </a>
                     <a href="http://lattes.cnpq.br/4188974374017863" target="_blank" class="contact-card">
