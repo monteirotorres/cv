@@ -499,6 +499,103 @@
             font-size: 0.85em;
         }
 
+        /* Research project */
+        .project-card {
+            display: grid;
+            gap: 22px;
+            padding: 26px;
+            background: var(--accent-light);
+            border: 1px solid var(--border);
+            border-radius: 11px;
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+        .project-label {
+            font-size: 0.68em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 8px;
+        }
+
+        .project-title {
+            font-size: 1.05em;
+            font-weight: 600;
+            line-height: 1.4;
+            color: var(--primary);
+            text-wrap: balance;
+        }
+
+        .project-acronym {
+            margin-top: 8px;
+            font-size: 0.88em;
+            color: var(--accent);
+        }
+
+        .project-acronym strong { font-weight: 700; letter-spacing: 0.5px; }
+
+        .project-summary {
+            font-size: 0.9em;
+            line-height: 1.75;
+            max-width: 70ch;
+        }
+
+        .project-figure { margin: 0; }
+
+        .project-figure img {
+            display: block;
+            width: 100%;
+            height: auto;
+            background: #ffffff;
+            padding: 10px;
+            border-radius: 9px;
+            border: 1px solid var(--border);
+        }
+
+        .project-figure figcaption {
+            font-size: 0.75em;
+            color: var(--text-light);
+            margin-top: 8px;
+            text-align: center;
+        }
+
+        .project-modules {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 10px;
+        }
+
+        .project-modules li {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            padding: 10px 12px;
+            font-size: 0.82em;
+            line-height: 1.45;
+            color: var(--text-light);
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+        .project-modules strong {
+            display: block;
+            color: var(--primary);
+            font-size: 1.05em;
+            margin-bottom: 2px;
+        }
+
+        .project-facts {
+            display: grid;
+            grid-template-columns: max-content 1fr;
+            gap: 6px 16px;
+            font-size: 0.85em;
+            line-height: 1.55;
+        }
+
+        .project-facts dt { font-weight: 600; color: var(--primary); }
+        .project-facts dd { color: var(--text-light); }
+
         /* Responsive */
         @media (max-width: 620px) {
             body { padding: 10px; }
@@ -506,6 +603,9 @@
             .tab-content { padding: 28px 22px; }
             .contact-grid { grid-template-columns: 1fr; }
             .tab-button { padding: 13px 10px; font-size: 0.8em; }
+            .project-card { padding: 18px; }
+            .project-facts { grid-template-columns: 1fr; gap: 2px; }
+            .project-facts dd { margin-bottom: 8px; }
         }
     </style>
 </head>
@@ -557,6 +657,42 @@
                     <span class="keyword-tag">Docking molecular</span>
                     <span class="keyword-tag">Quimioinformática</span>
                 </div>
+                <h3 class="section-title section-gap">Projeto de Pesquisa</h3>
+                <article class="project-card">
+                    <div>
+                        <div class="project-label">CNPq &nbsp;·&nbsp; Chamada PQ/2025 &nbsp;·&nbsp; Bolsas de Produtividade em Pesquisa</div>
+                        <h4 class="project-title">Desenvolvimento, validação e integração de métodos de biologia computacional e inteligência artificial para a prospecção de novos fármacos</h4>
+                        <div class="project-acronym"><strong>AM2PM</strong> — Máquina de Prospecção Perpétua de Antimicrobianos</div>
+                    </div>
+                    <p class="project-summary">Pipeline contínua e organismo-específica que integra modelagem de redes metabólicas, biologia estrutural e aprendizado de máquina para prospectar novos candidatos antimicrobianos contra patógenos multirresistentes. Em vez de uma campanha pontual de triagem, o AM2PM funciona como um motor contínuo: um ciclo curto atualiza os escores dos alvos a cada rodada de triagem virtual, e um ciclo completo reconstrói os alvos sempre que surgem novos dados genômicos ou estruturais. Os complexos preditos alimentam uma base de dados aberta à comunidade científica.</p>
+                    <figure class="project-figure">
+                        <img src="am2pm-pipeline.png" alt="Diagrama da pipeline AM2PM: seleção de alvos (TARDIS), modelagem (ProtCHOIR), preparação (SPADA), detecção de bolsões (HocusPockets), clusterização e preparação de ligantes, e triagem virtual (OCDocker), com ciclos completo e curto alimentando a base AM2PM" loading="lazy" width="1213" height="659">
+                        <figcaption>Ciclos completo e curto da pipeline AM2PM, executada em contêineres Docker.</figcaption>
+                    </figure>
+                    <div>
+                        <div class="project-label">Módulos</div>
+                        <ul class="project-modules">
+                            <li><strong>TARDIS</strong>Seleção e priorização de alvos a partir de redes metabólicas</li>
+                            <li><strong>ProtCHOIR</strong>Modelagem estrutural dos alvos selecionados</li>
+                            <li><strong>SPADA</strong>Preparação dos alvos para a triagem</li>
+                            <li><strong>HocusPockets</strong>Detecção de cavidades com potencial farmacológico</li>
+                            <li><strong>Liggdrasil</strong>Curadoria e clusterização hierárquica de bases de ligantes</li>
+                            <li><strong>OCDocker</strong>Triagem virtual por consenso baseado em aprendizado de máquina</li>
+                        </ul>
+                    </div>
+                    <dl class="project-facts">
+                        <dt>Objetivo</dt>
+                        <dd>Desenvolver e validar uma pipeline integrada e organismo-específica de prospecção de novos candidatos a fármacos antimicrobianos.</dd>
+                        <dt>Prova de conceito</dt>
+                        <dd><em>Klebsiella pneumoniae</em> e <em>Pseudomonas aeruginosa</em></dd>
+                        <dt>Infraestrutura</dt>
+                        <dd>Orquestração com Snakemake em ambiente de computação de alto desempenho (HPC), em contêineres Docker</dd>
+                        <dt>Validação</dt>
+                        <dd>Ensaios de inibição de crescimento <em>in vitro</em> e calorimetria de titulação isotérmica, com rede de colaboradores no Brasil e no Reino Unido (CRAFT Therapeutics, GARDP)</dd>
+                        <dt>Local</dt>
+                        <dd>Laboratório de Modelagem e Dinâmica Molecular — IBCCF/UFRJ</dd>
+                    </dl>
+                </article>
                 <h3 class="section-title section-gap">Prêmios e Títulos</h3>
                 <ul class="awards-list">
                     <li>Jovem Cientista do Nosso Estado, FAPERJ (2023)</li>
@@ -759,6 +895,42 @@
                     <span class="keyword-tag">Molecular docking</span>
                     <span class="keyword-tag">Chemoinformatics</span>
                 </div>
+                <h3 class="section-title section-gap">Research Project</h3>
+                <article class="project-card">
+                    <div>
+                        <div class="project-label">CNPq &nbsp;·&nbsp; PQ/2025 Call &nbsp;·&nbsp; Research Productivity Fellowship</div>
+                        <h4 class="project-title">Development, validation and integration of computational biology and artificial intelligence methods for the prospection of new drugs</h4>
+                        <div class="project-acronym"><strong>AM2PM</strong> — Antimicrobial Machine for Perpetual Mining</div>
+                    </div>
+                    <p class="project-summary">A continuous, organism-specific pipeline that integrates metabolic-network modelling, structural biology and machine learning to prospect new antimicrobial candidates against multidrug-resistant pathogens. Rather than a one-off screening campaign, AM2PM acts as a perpetual engine: a short cycle refreshes target scores after each round of virtual screening, while a full cycle rebuilds the targets whenever new genomic or structural data appear. The predicted complexes feed an open database for the scientific community.</p>
+                    <figure class="project-figure">
+                        <img src="am2pm-pipeline.png" alt="Diagram of the AM2PM pipeline: target selection (TARDIS), modelling (ProtCHOIR), preparation (SPADA), pocket detection (HocusPockets), ligand clustering and preparation, and virtual screening (OCDocker), with full and short cycles feeding the AM2PM database" loading="lazy" width="1213" height="659">
+                        <figcaption>Full and short cycles of the AM2PM pipeline, run in Docker containers.</figcaption>
+                    </figure>
+                    <div>
+                        <div class="project-label">Modules</div>
+                        <ul class="project-modules">
+                            <li><strong>TARDIS</strong>Target selection and prioritisation from metabolic networks</li>
+                            <li><strong>ProtCHOIR</strong>Structural modelling of the selected targets</li>
+                            <li><strong>SPADA</strong>Preparation of targets for screening</li>
+                            <li><strong>HocusPockets</strong>Detection of pharmacologically exploitable pockets</li>
+                            <li><strong>Liggdrasil</strong>Curation and hierarchical clustering of ligand databases</li>
+                            <li><strong>OCDocker</strong>Machine-learning consensus virtual screening</li>
+                        </ul>
+                    </div>
+                    <dl class="project-facts">
+                        <dt>Goal</dt>
+                        <dd>Develop and validate an integrated, organism-specific pipeline for the prospection of new antimicrobial drug candidates.</dd>
+                        <dt>Proof of concept</dt>
+                        <dd><em>Klebsiella pneumoniae</em> and <em>Pseudomonas aeruginosa</em></dd>
+                        <dt>Infrastructure</dt>
+                        <dd>Snakemake orchestration on a high-performance computing (HPC) environment, in Docker containers</dd>
+                        <dt>Validation</dt>
+                        <dd><em>In vitro</em> growth-inhibition assays and isothermal titration calorimetry, with a collaborator network in Brazil and the UK (CRAFT Therapeutics, GARDP)</dd>
+                        <dt>Venue</dt>
+                        <dd>Molecular Modelling and Dynamics Laboratory — IBCCF/UFRJ</dd>
+                    </dl>
+                </article>
                 <h3 class="section-title section-gap">Awards &amp; Honours</h3>
                 <ul class="awards-list">
                     <li>Young Scientist of Our State, FAPERJ (2023)</li>
