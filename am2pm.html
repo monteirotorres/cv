@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AM2PM — Máquina de Prospecção Perpétua de Antimicrobianos</title>
+    <meta name="description" content="AM2PM: pipeline contínua e organismo-específica de biologia computacional e inteligência artificial para a prospecção de novos fármacos antimicrobianos. Projeto CNPq PQ/2025 — Pedro Henrique Monteiro Torres, LMDM/IBCCF/UFRJ.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="icon" type="image/svg+xml" href="favico.svg">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* ===== LIGHT MODE ===== */
+        :root {
+            --primary:       #26280a;
+            --accent:        #6c7010;
+            --accent-vivid:  #b3b833;
+            --accent-light:  #f0f1cc;
+            --text:          #1c1e08;
+            --text-light:    #565820;
+            --border:        #d2d468;
+            --bg:            #f4f4db;
+            --card:          #ffffff;
+            --header-from:   #1c1e06;
+            --header-to:     #484a14;
+            --shadow:        rgba(26, 28, 8, 0.13);
+            --toggle-bg:     #6c7010;
+            --toggle-color:  #ffffff;
+            --icon-bg:       #6c7010;
+            --icon-color:    #ffffff;
+        }
+
+        /* ===== DARK MODE ===== */
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --primary:       #f0f0f0;
+                --accent:        #b3b833;
+                --accent-vivid:  #b3b833;
+                --accent-light:  #1e1e1e;
+                --text:          #e0e0e0;
+                --text-light:    #888888;
+                --border:        #2a2a2a;
+                --bg:            #0d0d0d;
+                --card:          #161616;
+                --header-from:   #0d0d0d;
+                --header-to:     #1c1c1c;
+                --shadow:        rgba(0, 0, 0, 0.65);
+                --toggle-bg:     #b3b833;
+                --toggle-color:  #0d0d0d;
+                --icon-bg:       #222222;
+                --icon-color:    #b3b833;
+            }
+        }
+
+        [data-theme="dark"] {
+            --primary:       #f0f0f0;
+            --accent:        #b3b833;
+            --accent-vivid:  #b3b833;
+            --accent-light:  #1e1e1e;
+            --text:          #e0e0e0;
+            --text-light:    #888888;
+            --border:        #2a2a2a;
+            --bg:            #0d0d0d;
+            --card:          #161616;
+            --header-from:   #0d0d0d;
+            --header-to:     #1c1c1c;
+            --shadow:        rgba(0, 0, 0, 0.65);
+            --toggle-bg:     #b3b833;
+            --toggle-color:  #0d0d0d;
+            --icon-bg:       #222222;
+            --icon-color:    #b3b833;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            line-height: 1.7;
+            color: var(--text);
+            background-color: var(--bg);
+            padding: 30px 20px;
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* ===== CONTROLS ===== */
+        .controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 1000;
+        }
+
+        .ctrl-btn {
+            height: 26px;
+            min-width: 38px;
+            padding: 0 9px;
+            background: var(--toggle-bg);
+            color: var(--toggle-color);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.82em;
+            box-shadow: 0 2px 8px var(--shadow);
+            transition: background 0.3s, color 0.3s, transform 0.2s;
+            text-decoration: none;
+        }
+
+        .ctrl-btn:hover { transform: scale(1.1); }
+
+        .lang-btn {
+            height: 26px;
+            padding: 0 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: 1px solid var(--toggle-bg);
+            background: transparent;
+            color: var(--accent);
+            font-family: inherit;
+            font-size: 0.72em;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px var(--shadow);
+            transition: background 0.2s, color 0.2s, transform 0.2s;
+        }
+
+        .lang-btn:hover { transform: scale(1.1); }
+        .lang-btn.active { background: var(--toggle-bg); color: var(--toggle-color); }
+
+        /* ===== CONTAINER ===== */
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            background: var(--card);
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px var(--shadow);
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+
+        /* ===== HEADER ===== */
+        .proj-header {
+            background: linear-gradient(135deg, var(--header-from) 0%, var(--header-to) 100%);
+            padding: 48px 48px 42px;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            transition: background 0.3s;
+        }
+
+        .proj-header::after {
+            content: '';
+            position: absolute;
+            top: -80px; right: -80px;
+            width: 320px; height: 320px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .proj-eyebrow {
+            position: relative; z-index: 1;
+            font-size: 0.72em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            opacity: 0.75;
+            margin-bottom: 14px;
+        }
+
+        .proj-acronym-big {
+            position: relative; z-index: 1;
+            font-size: 2.6em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+
+        .proj-expansion {
+            position: relative; z-index: 1;
+            font-size: 1.05em;
+            font-weight: 400;
+            opacity: 0.9;
+            margin-bottom: 18px;
+        }
+
+        .proj-fulltitle {
+            position: relative; z-index: 1;
+            font-size: 0.92em;
+            font-weight: 400;
+            opacity: 0.78;
+            line-height: 1.5;
+            max-width: 62ch;
+            border-top: 1px solid rgba(255,255,255,0.18);
+            padding-top: 16px;
+        }
+
+        /* ===== CONTENT ===== */
+        .content { padding: 40px 48px 20px; }
+        .lang-block { display: none; }
+        .lang-block.active { display: block; }
+
+        .section-title {
+            font-size: 0.72em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.8px;
+            color: var(--accent);
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-light);
+            transition: color 0.3s, border-color 0.3s;
+        }
+
+        .section + .section { margin-top: 40px; }
+
+        .prose p {
+            font-size: 0.95em;
+            line-height: 1.8;
+            margin-bottom: 14px;
+            max-width: 72ch;
+        }
+
+        .prose p:last-child { margin-bottom: 0; }
+
+        .lead {
+            font-size: 1.02em !important;
+            line-height: 1.75 !important;
+            color: var(--text);
+        }
+
+        .prose em { font-style: italic; }
+        .prose strong { font-weight: 600; color: var(--primary); }
+
+        sup.ref {
+            font-size: 0.72em;
+            font-weight: 600;
+            color: var(--accent);
+            cursor: pointer;
+            padding: 0 1px;
+        }
+
+        /* ===== FIGURE ===== */
+        .figure {
+            margin: 24px 0 4px;
+        }
+
+        .figure img {
+            display: block;
+            width: 100%;
+            height: auto;
+            background: #ffffff;
+            padding: 14px;
+            border-radius: 11px;
+            border: 1px solid var(--border);
+        }
+
+        .figure figcaption {
+            font-size: 0.82em;
+            line-height: 1.6;
+            color: var(--text-light);
+            margin-top: 12px;
+            max-width: 72ch;
+        }
+
+        .figure figcaption strong { color: var(--primary); font-weight: 600; }
+
+        /* ===== GOALS ===== */
+        .goals-list {
+            list-style: none;
+            counter-reset: goal;
+            display: grid;
+            gap: 10px;
+        }
+
+        .goals-list li {
+            counter-increment: goal;
+            position: relative;
+            padding: 12px 16px 12px 48px;
+            background: var(--accent-light);
+            border-radius: 9px;
+            border-left: 3px solid var(--accent-vivid);
+            font-size: 0.9em;
+            line-height: 1.55;
+            transition: background 0.3s;
+        }
+
+        .goals-list li::before {
+            content: counter(goal);
+            position: absolute;
+            left: 14px; top: 12px;
+            width: 22px; height: 22px;
+            background: var(--accent);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.78em;
+            font-weight: 700;
+        }
+
+        /* ===== MODULES ===== */
+        .modules {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 12px;
+            margin-top: 4px;
+        }
+
+        .module {
+            background: var(--accent-light);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px 18px;
+            transition: background 0.3s, border-color 0.2s, transform 0.2s;
+        }
+
+        .module:hover { border-color: var(--accent-vivid); transform: translateY(-2px); }
+
+        .module-name {
+            font-size: 1em;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.3px;
+            margin-bottom: 4px;
+        }
+
+        .module-role {
+            font-size: 0.82em;
+            line-height: 1.5;
+            color: var(--text-light);
+        }
+
+        /* ===== RESULT CARDS ===== */
+        .result-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+            margin: 4px 0 18px;
+        }
+
+        .stat {
+            background: var(--accent-light);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px;
+            transition: background 0.3s;
+        }
+
+        .stat-value {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1.1;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .stat-label {
+            font-size: 0.78em;
+            line-height: 1.45;
+            color: var(--text-light);
+            margin-top: 5px;
+        }
+
+        /* ===== FACTS ===== */
+        .facts {
+            display: grid;
+            grid-template-columns: max-content 1fr;
+            gap: 8px 20px;
+            font-size: 0.88em;
+            line-height: 1.6;
+            margin-top: 4px;
+        }
+
+        .facts dt { font-weight: 600; color: var(--primary); }
+        .facts dd { color: var(--text-light); }
+        .facts dd em { font-style: italic; }
+
+        /* ===== REFERENCES ===== */
+        .references {
+            padding: 36px 48px 44px;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+
+        .ref-list {
+            list-style: none;
+            counter-reset: ref;
+            display: grid;
+            gap: 9px;
+        }
+
+        .ref-list li {
+            counter-increment: ref;
+            position: relative;
+            padding-left: 34px;
+            font-size: 0.82em;
+            line-height: 1.6;
+            color: var(--text-light);
+        }
+
+        .ref-list li::before {
+            content: counter(ref) ".";
+            position: absolute;
+            left: 0; top: 0;
+            width: 26px;
+            text-align: right;
+            font-weight: 600;
+            color: var(--accent);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .ref-list li:target { background: var(--accent-light); border-radius: 6px; padding-top: 4px; padding-bottom: 4px; }
+        .ref-list em { font-style: italic; }
+        .ref-list a { color: var(--accent); text-decoration: none; }
+        .ref-list a:hover { text-decoration: underline; }
+
+        /* ===== FOOTER ===== */
+        .proj-footer {
+            padding: 24px 48px 34px;
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.82em;
+        }
+
+        .proj-footer a { color: var(--accent); text-decoration: none; }
+        .proj-footer a:hover { text-decoration: underline; }
+
+        /* Responsive */
+        @media (max-width: 620px) {
+            body { padding: 10px; }
+            .proj-header { padding: 36px 24px 30px; }
+            .proj-acronym-big { font-size: 2em; }
+            .content { padding: 30px 22px 14px; }
+            .references { padding: 28px 22px 32px; }
+            .proj-footer { padding: 20px 22px 28px; }
+            .facts { grid-template-columns: 1fr; gap: 2px; }
+            .facts dd { margin-bottom: 8px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="controls">
+        <a class="ctrl-btn" href="index.html" title="Voltar ao CV" aria-label="Voltar ao CV"><i class="fas fa-arrow-left"></i></a>
+        <button class="ctrl-btn" id="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema claro/escuro"><i class="fas fa-moon" id="theme-icon"></i></button>
+        <button class="lang-btn" id="flag-pt" onclick="setLanguage('pt')">PT</button>
+        <button class="lang-btn" id="flag-en" onclick="setLanguage('en')">EN</button>
+    </div>
+
+    <div class="container">
+
+        <header class="proj-header">
+            <div class="proj-eyebrow"><span data-i18n="eyebrow"></span></div>
+            <div class="proj-acronym-big">AM2PM</div>
+            <div class="proj-expansion" data-i18n="expansion"></div>
+            <div class="proj-fulltitle" data-i18n="fulltitle"></div>
+        </header>
+
+        <div class="content">
+
+            <!-- ====================== PORTUGUÊS ====================== -->
+            <article id="content-pt" class="lang-block">
+
+                <section class="section">
+                    <h2 class="section-title">Resumo</h2>
+                    <div class="prose">
+                        <p class="lead">A preocupação global com microrganismos multirresistentes cresce de forma constante: estima-se que o número anual de mortes associadas a bactérias resistentes a múltiplos fármacos (MDR) chegue a 8,22 milhões até 2050. O número limitado de antimicrobianos aprovados (cerca de 6,2% dos medicamentos aprovados pela FDA) e de alvos microbianos constitui um gargalo crítico.</p>
+                        <p>Em nosso grupo, utilizamos abordagens computacionais para modelar tanto redes metabólicas, a partir de dados genômicos, quanto interações moleculares em nível estrutural. O objetivo deste projeto é desenvolver e validar uma <strong>pipeline automatizada e contínua</strong> para prospectar novas entidades químicas com atividade antimicrobiana — priorizando alvos proteicos (TARDIS), modelando todos os alvos selecionados (ProtCHOIR), identificando cavidades exploráveis (HocusPockets), preparando-as para triagem virtual (SPADA) e realizando triagem virtual por consenso baseado em aprendizado de máquina (OCDocker) sobre um banco de ligantes curado (Liggdrasil). Os complexos proteína–ligante preditos serão rigorosamente avaliados e validados por calorimetria isotérmica, alimentando bases de conhecimento organismo-específicas e abertas — repositórios de potenciais moléculas terapêuticas prontamente testáveis <em>in vitro</em> e <em>in vivo</em> por grupos de pesquisa em todo o mundo.</p>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h2 class="section-title">Introdução e Objetivo</h2>
+                    <div class="prose">
+                        <p>Nosso grupo vem, tradicionalmente, aplicando técnicas de modelagem computacional na compreensão de sistemas biológicos e na busca por novos candidatos a fármacos, com contribuições em flavivírus de importância nacional (Zika<sup class="ref" data-ref="1">1</sup><sup class="ref" data-ref="2">2</sup><sup class="ref" data-ref="3">3</sup>, febre amarela<sup class="ref" data-ref="4">4</sup>), HIV<sup class="ref" data-ref="5">5</sup>, parasitoses (<em>T. cruzi</em><sup class="ref" data-ref="6">6</sup>, <em>T. foetus</em><sup class="ref" data-ref="7">7</sup>) e câncer<sup class="ref" data-ref="8">8</sup><sup class="ref" data-ref="9">9</sup><sup class="ref" data-ref="10">10</sup><sup class="ref" data-ref="11">11</sup>.</p>
+                        <p>Recentemente, voltamos nossos esforços para a modelagem de novos compostos com potencial antimicrobiano. Patógenos bacterianos representam verdadeiras emergências de saúde pública, e estima-se que ocorrerão cerca de 1,91 milhão de mortes atribuíveis à resistência antimicrobiana (RAM) e cerca de 8,22 milhões de mortes associadas à RAM em 2050<sup class="ref" data-ref="12">12</sup>. As bactérias do grupo <strong>ESKAPE</strong> (<em>Enterococcus faecium, Staphylococcus aureus, Klebsiella pneumoniae, Acinetobacter baumannii, Pseudomonas aeruginosa</em> e <em>Enterobacter</em> spp.) são listadas pela OMS como patógenos prioritários críticos<sup class="ref" data-ref="13">13</sup><sup class="ref" data-ref="14">14</sup>. O modelo tradicional de desenvolvimento de antibióticos não tem fornecido soluções adequadas, em parte por desafios científicos e pela falta de incentivos comerciais.</p>
+                        <p>Nesse sentido, nosso grupo tem focado em uma contribuição inovadora: a <strong>Máquina de Prospecção Perpétua de Antimicrobianos (AM2PM)</strong>, que integra ferramentas disponíveis e recém-desenvolvidas em um pipeline específico para cada organismo. Em contraste com um esforço pontual de descoberta de fármacos, esse motor foi projetado para gerar novas hipóteses terapêuticas de forma iterativa e contínua, aprimorado por inteligência artificial.</p>
+                        <p><strong>Objetivo principal:</strong> desenvolver e validar uma pipeline integrada e organismo-específica de prospecção de novos candidatos a fármacos antimicrobianos.</p>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h2 class="section-title">A pipeline AM2PM</h2>
+                    <div class="prose">
+                        <p>O AM2PM é um framework que integra, em um fluxo automatizado e reprodutível, a identificação de alvos bacterianos e a triagem de ligantes baseada em estrutura. Opera em dois ritmos: um <strong>ciclo curto</strong>, que atualiza os escores dos alvos a cada rodada de triagem virtual, e um <strong>ciclo completo</strong>, que reconstrói os alvos sempre que surgem novos dados genômicos ou estruturais.</p>
+                    </div>
+                    <figure class="figure">
+                        <img src="am2pm-pipeline.png" alt="Diagrama do fluxo de informações do AM2PM: TARDIS seleciona alvos a partir de bases de genomas; ProtCHOIR modela os alvos usando bases de estruturas; SPADA prepara os alvos; HocusPockets detecta cavidades; bases de ligantes passam por clusterização e preparação; OCDocker realiza a triagem virtual; ciclos completo e curto decidem se há novos dados e alimentam a base AM2PMdb." loading="lazy" width="1213" height="659">
+                        <figcaption><strong>Figura 1.</strong> Fluxo de informações no pipeline de prospecção contínua de antimicrobianos. As primeiras etapas geram modelos para a rede metabólica e o proteoma estrutural do organismo-alvo, seguidas pela priorização automatizada de alvos e pela triagem virtual por consenso. Os melhores candidatos são armazenados no AM2PMdb, pronto para consulta e testes sempre que houver necessidade de novos fármacos. Toda a pipeline é executada em contêineres Docker.</figcaption>
+                    </figure>
+                </section>
+
+                <section class="section">
+                    <h2 class="section-title">Módulos</h2>
+                    <div class="modules">
+                        <div class="module">
+                            <div class="module-name">TARDIS</div>
+                            <div class="module-role">Recebe um genoma ou proteoma, gera modelos metabólicos com CarveMe<sup class="ref" data-ref="15">15</sup> e simula o crescimento <em>in silico</em> por Análise de Balanço de Fluxo (FBA) em COBRApy<sup class="ref" data-ref="16">16</sup>. Prioriza alvos por essencialidade, participação em reações de gargalo e ausência de similaridade com proteínas humanas.</div>
+                        </div>
+                        <div class="module">
+                            <div class="module-name">ProtCHOIR</div>
+                            <div class="module-role">Constrói modelos 3D por modelagem comparativa usando moldes do PDB e o MODELLER<sup class="ref" data-ref="18">18</sup>, com relatório de confiabilidade<sup class="ref" data-ref="17">17</sup>.</div>
+                        </div>
+                        <div class="module">
+                            <div class="module-name">SPADA</div>
+                            <div class="module-role">Refina estruturas e incorpora flexibilidade: preparação do sistema (VMD/PDB2PQR<sup class="ref" data-ref="19">19</sup>), solvatação, íons e estados de protonação (PROPKA<sup class="ref" data-ref="20">20</sup>).</div>
+                        </div>
+                        <div class="module">
+                            <div class="module-name">HocusPockets</div>
+                            <div class="module-role">Identifica e pontua cavidades drogáveis com Fpocket<sup class="ref" data-ref="21">21</sup> e ConCavity<sup class="ref" data-ref="22">22</sup>, agregando descritores quânticos (HOMO/LUMO) para sugerir sítios catalíticos.</div>
+                        </div>
+                        <div class="module">
+                            <div class="module-name">Liggdrasil</div>
+                            <div class="module-role">Pré-processamento, curadoria e clusterização hierárquica das bases de dados de ligantes, baseada em aprendizado de máquina.</div>
+                        </div>
+                        <div class="module">
+                            <div class="module-name">OCDocker</div>
+                            <div class="module-role">Docking por consenso: seleciona a pose mais representativa, reavalia com funções de pontuação e gera um score final por aprendizado de máquina, produzindo rankings de ligantes.</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h2 class="section-title">Resultados preliminares</h2>
+                    <div class="prose">
+                        <p><strong>ProtCHOIR constrói estruturas oligoméricas de alta qualidade.</strong> Avaliando estereoquímica, superfície molecular e interfaces, o ProtCHOIR alcançou, sobre um conjunto de referência de 141 proteínas em diferentes estados oligoméricos, precisão média superior a 91% nos modos de sequência e estrutura. A ferramenta foi publicada e está disponível para a comunidade<sup class="ref" data-ref="17">17</sup>.</p>
+                    </div>
+                    <div class="result-stats">
+                        <div class="stat"><div class="stat-value">&gt; 91%</div><div class="stat-label">precisão média do ProtCHOIR (141 proteínas de referência)</div></div>
+                        <div class="stat"><div class="stat-value">85%</div><div class="stat-label">pontuação MEMOTE do modelo metabólico de <em>K. pneumoniae</em> (TARDIS)</div></div>
+                        <div class="stat"><div class="stat-value">91,5%</div><div class="stat-label">precisão do HocusPockets nas 3 primeiras cavidades (270 estruturas do PDBbind)</div></div>
+                        <div class="stat"><div class="stat-value">0,76</div><div class="stat-label">AUC-ROC do OCScore na triagem virtual (12 alvos DUDEz)</div></div>
+                    </div>
+                    <div class="prose">
+                        <p><strong>TARDIS encontra genes essenciais para <em>K. pneumoniae</em>.</strong> O modelo metabólico em escala genômica alcançou pontuação MEMOTE média de 85% e previu taxa de crescimento de 65,87 mmol gDW⁻¹ h⁻¹ em meio LB. Entre 21 proteínas metabólicas essenciais identificadas, destacam-se a redutase MurB e a transferase MurG — ambas na biossíntese de peptidoglicano, via crítica da parede celular bacteriana, e também relevantes em <em>P. aeruginosa</em>, <em>A. baumannii</em> e <em>E. faecium</em>.</p>
+                        <p><strong>HocusPockets identifica os sítios de ligação corretos.</strong> Sobre 270 estruturas do PDBbind, a abordagem baseada na soma de Fukushima (método quântico) atingiu 91,5% de precisão entre as três primeiras cavidades identificadas.</p>
+                        <p><strong>OCDocker melhora a precisão da triagem.</strong> Aplicado a 12 alvos do DUDEz e comparado com 17 estratégias alternativas, o OCScore final alcançou AUC-ROC ≈ 0,76 e RMSE ≈ 0,62, superando o consenso por média aritmética (0,71 e 0,86) e as demais funções de pontuação individuais.</p>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h2 class="section-title">Validação experimental</h2>
+                    <dl class="facts">
+                        <dt>Prova de conceito</dt>
+                        <dd><em>Klebsiella pneumoniae</em> e <em>Pseudomonas aeruginosa</em></dd>
+                        <dt>Inibição de crescimento</dt>
+                        <dd>Ensaios <em>in vitro</em> contra cepas ESKAPE da coleção do LIMM (colaboração com a Dra. Raquel Bonelli); determinação da concentração inibitória mínima (CIM) e testes de citotoxicidade</dd>
+                        <dt>Expressão proteica</dt>
+                        <dd>Produção em <em>E. coli</em> e purificação (colaboração com o Dr. Marcius Almeida); pureza avaliada por SDS-PAGE e MALDI-TOF</dd>
+                        <dt>Interação ligante–alvo</dt>
+                        <dd>Calorimetria de titulação isotérmica (ITC-200, Malvern MicroCal) a 25 °C</dd>
+                        <dt>Infraestrutura</dt>
+                        <dd>Orquestração com Snakemake em ambiente de computação de alto desempenho (HPC), em contêineres Docker</dd>
+                        <dt>Colaborações</dt>
+                        <dd>Rede no Brasil e no Reino Unido, incluindo CRAFT Therapeutics (cristalografia de raios X) e GARDP</dd>
+                    </dl>
+                </section>
+
+                <section class="section">
+                    <h2 class="section-title">Impacto e ciência aberta</h2>
+                    <div class="prose">
+                        <p>O projeto fará uso extensivo de bases públicas bem curadas — Protein Data Bank (estruturas), ZINC (pequenas moléculas) e GenBank (dados genômicos anotados). Todos os dados derivados — bibliotecas de ligantes agrupadas, <em>embeddings</em> de descritores e associações proteína–ligante inferidas — serão versionados e documentados, e os fluxos de trabalho compartilhados em repositórios públicos (GitHub, Zenodo), assegurando transparência e reprodutibilidade.</p>
+                        <p>Os resultados serão incorporados ao <strong>AM2PMdb</strong>, base de acesso aberto concebida como um "motor público de hipóteses" para a descoberta de antimicrobianos, publicada sob licença permissiva (CC BY ou MIT). O tratamento de dados seguirá os princípios <strong>FAIR</strong> (Encontráveis, Acessíveis, Interoperáveis e Reutilizáveis), e novas associações curadas poderão ser submetidas de volta às bases de origem (p. ex. ChEMBL). Os módulos de software serão registrados como Propriedade Intelectual, mas permanecerão livremente disponíveis para uso e aperfeiçoamento pela comunidade. A arquitetura foi concebida para ser posteriormente adaptada a diferentes patógenos bacterianos, protozoários e virais.</p>
+                    </div>
+                </section>
+            </article>
+
+            <!-- ====================== ENGLISH ====================== -->
+            <article id="content-en" class="lang-block">
+
+                <section class="section">
+                    <h2 class="section-title">Abstract</h2>
+                    <div class="prose">
+                        <p class="lead">Global concern over multidrug-resistant microorganisms is rising steadily: the annual number of deaths associated with multidrug-resistant (MDR) bacteria is projected to reach 8.22 million by 2050. The limited number of approved antimicrobials (about 6.2% of FDA-approved drugs) and of microbial targets is a critical bottleneck.</p>
+                        <p>Our group uses computational approaches to model both metabolic networks, from genomic data, and molecular interactions at the structural level. The goal of this project is to develop and validate an <strong>automated, continuous pipeline</strong> to prospect new chemical entities with antimicrobial activity — prioritising protein targets (TARDIS), modelling every selected target (ProtCHOIR), identifying druggable pockets (HocusPockets), preparing them for virtual screening (SPADA) and running machine-learning consensus virtual screening (OCDocker) over a curated ligand database (Liggdrasil). The predicted protein–ligand complexes will be rigorously assessed and validated by isothermal calorimetry, feeding open, organism-specific knowledge bases — repositories of candidate therapeutic molecules readily testable <em>in vitro</em> and <em>in vivo</em> by research groups worldwide.</p>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h2 class="section-title">Introduction &amp; Objective</h2>
+                    <div class="prose">
+                        <p>Our group has traditionally applied computational modelling to understand biological systems and search for new drug candidates, with contributions on nationally relevant flaviviruses (Zika<sup class="ref" data-ref="1">1</sup><sup class="ref" data-ref="2">2</sup><sup class="ref" data-ref="3">3</sup>, yellow fever<sup class="ref" data-ref="4">4</sup>), HIV<sup class="ref" data-ref="5">5</sup>, parasites (<em>T. cruzi</em><sup class="ref" data-ref="6">6</sup>, <em>T. foetus</em><sup class="ref" data-ref="7">7</sup>) and cancer<sup class="ref" data-ref="8">8</sup><sup class="ref" data-ref="9">9</sup><sup class="ref" data-ref="10">10</sup><sup class="ref" data-ref="11">11</sup>.</p>
+                        <p>Recently, we turned our efforts to modelling new compounds with antimicrobial potential. Bacterial pathogens are genuine public-health emergencies: about 1.91 million deaths attributable to antimicrobial resistance (AMR) and about 8.22 million AMR-associated deaths are projected for 2050<sup class="ref" data-ref="12">12</sup>. The <strong>ESKAPE</strong> group (<em>Enterococcus faecium, Staphylococcus aureus, Klebsiella pneumoniae, Acinetobacter baumannii, Pseudomonas aeruginosa</em> and <em>Enterobacter</em> spp.) is listed by the WHO as critical priority pathogens<sup class="ref" data-ref="13">13</sup><sup class="ref" data-ref="14">14</sup>. The traditional antibiotic-development model has failed to deliver adequate solutions, partly due to scientific challenges and a lack of commercial incentives.</p>
+                        <p>In response, our group has focused on an innovative contribution: the <strong>Antimicrobial Machine for Perpetual Mining (AM2PM)</strong>, which integrates available and newly developed tools into an organism-specific pipeline. In contrast to a one-off drug-discovery effort, this engine is designed to generate new therapeutic hypotheses iteratively and continuously, enhanced by artificial intelligence.</p>
+                        <p><strong>Main objective:</strong> to develop and validate an integrated, organism-specific pipeline for the prospection of new antimicrobial drug candidates.</p>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h2 class="section-title">The AM2PM pipeline</h2>
+                    <div class="prose">
+                        <p>AM2PM is a framework that chains, in an automated and reproducible flow, bacterial-target identification and structure-based ligand screening. It runs at two tempos: a <strong>short cycle</strong>, which refreshes target scores after each round of virtual screening, and a <strong>full cycle</strong>, which rebuilds the targets whenever new genomic or structural data appear.</p>
+                    </div>
+                    <figure class="figure">
+                        <img src="am2pm-pipeline.png" alt="Diagram of the AM2PM information flow: TARDIS selects targets from genome databases; ProtCHOIR models the targets using structure databases; SPADA prepares the targets; HocusPockets detects pockets; ligand databases are clustered and prepared; OCDocker performs virtual screening; full and short cycles decide whether new data exist and feed the AM2PMdb database." loading="lazy" width="1213" height="659">
+                        <figcaption><strong>Figure 1.</strong> Information flow of the continuous antimicrobial-prospection pipeline. Early steps generate models for the metabolic network and structural proteome of the target organism, followed by automated target prioritisation and consensus virtual screening. The best candidates are stored in the AM2PMdb, ready for querying and testing whenever new drugs are needed. The whole pipeline runs in Docker containers.</figcaption>
+                    </figure>
+                </section>
+
+                <section class="section">
+                    <h2 class="section-title">Modules</h2>
+                    <div class="modules">
+                        <div class="module">
+                            <div class="module-name">TARDIS</div>
+                            <div class="module-role">Takes a genome or proteome, builds metabolic models with CarveMe<sup class="ref" data-ref="15">15</sup> and simulates growth <em>in silico</em> via Flux Balance Analysis (FBA) in COBRApy<sup class="ref" data-ref="16">16</sup>. Targets are prioritised by essentiality, participation in bottleneck reactions and absence of similarity to human proteins.</div>
+                        </div>
+                        <div class="module">
+                            <div class="module-name">ProtCHOIR</div>
+                            <div class="module-role">Builds 3D models by comparative modelling using PDB templates and MODELLER<sup class="ref" data-ref="18">18</sup>, with a reliability report<sup class="ref" data-ref="17">17</sup>.</div>
+                        </div>
+                        <div class="module">
+                            <div class="module-name">SPADA</div>
+                            <div class="module-role">Refines structures and adds flexibility: system preparation (VMD/PDB2PQR<sup class="ref" data-ref="19">19</sup>), solvation, ions and protonation states (PROPKA<sup class="ref" data-ref="20">20</sup>).</div>
+                        </div>
+                        <div class="module">
+                            <div class="module-name">HocusPockets</div>
+                            <div class="module-role">Identifies and scores druggable pockets with Fpocket<sup class="ref" data-ref="21">21</sup> and ConCavity<sup class="ref" data-ref="22">22</sup>, adding quantum descriptors (HOMO/LUMO) to suggest catalytic sites.</div>
+                        </div>
+                        <div class="module">
+                            <div class="module-name">Liggdrasil</div>
+                            <div class="module-role">Pre-processing, curation and hierarchical clustering of ligand databases, based on machine learning.</div>
+                        </div>
+                        <div class="module">
+                            <div class="module-name">OCDocker</div>
+                            <div class="module-role">Consensus docking: selects the most representative pose, re-scores with scoring functions and produces a final machine-learning score, yielding ligand rankings.</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h2 class="section-title">Preliminary results</h2>
+                    <div class="prose">
+                        <p><strong>ProtCHOIR builds high-quality oligomeric structures.</strong> Assessing stereochemistry, molecular surface and interfaces, ProtCHOIR reached, over a reference set of 141 proteins in different oligomeric states, mean accuracy above 91% in both sequence and structure modes. The tool has been published and is available to the community<sup class="ref" data-ref="17">17</sup>.</p>
+                    </div>
+                    <div class="result-stats">
+                        <div class="stat"><div class="stat-value">&gt; 91%</div><div class="stat-label">mean ProtCHOIR accuracy (141 reference proteins)</div></div>
+                        <div class="stat"><div class="stat-value">85%</div><div class="stat-label">MEMOTE score of the <em>K. pneumoniae</em> metabolic model (TARDIS)</div></div>
+                        <div class="stat"><div class="stat-value">91.5%</div><div class="stat-label">HocusPockets accuracy in the top-3 pockets (270 PDBbind structures)</div></div>
+                        <div class="stat"><div class="stat-value">0.76</div><div class="stat-label">OCScore AUC-ROC in virtual screening (12 DUDEz targets)</div></div>
+                    </div>
+                    <div class="prose">
+                        <p><strong>TARDIS finds essential genes for <em>K. pneumoniae</em>.</strong> The genome-scale metabolic model reached a mean MEMOTE score of 85% and predicted a growth rate of 65.87 mmol gDW⁻¹ h⁻¹ in LB medium. Among 21 essential metabolic proteins identified, the reductase MurB and the transferase MurG stand out — both in peptidoglycan biosynthesis, a critical bacterial cell-wall pathway, and also relevant in <em>P. aeruginosa</em>, <em>A. baumannii</em> and <em>E. faecium</em>.</p>
+                        <p><strong>HocusPockets identifies the correct binding sites.</strong> Over 270 PDBbind structures, the approach based on the Fukushima sum (quantum method) reached 91.5% accuracy among the first three pockets identified.</p>
+                        <p><strong>OCDocker improves screening accuracy.</strong> Applied to 12 DUDEz targets and compared with 17 alternative strategies, the final OCScore reached AUC-ROC ≈ 0.76 and RMSE ≈ 0.62, outperforming the arithmetic-mean consensus (0.71 and 0.86) and every individual scoring function.</p>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h2 class="section-title">Experimental validation</h2>
+                    <dl class="facts">
+                        <dt>Proof of concept</dt>
+                        <dd><em>Klebsiella pneumoniae</em> and <em>Pseudomonas aeruginosa</em></dd>
+                        <dt>Growth inhibition</dt>
+                        <dd><em>In vitro</em> assays against ESKAPE strains from the LIMM collection (collaboration with Dr. Raquel Bonelli); minimum inhibitory concentration (MIC) and cytotoxicity testing</dd>
+                        <dt>Protein expression</dt>
+                        <dd>Production in <em>E. coli</em> and purification (collaboration with Dr. Marcius Almeida); purity assessed by SDS-PAGE and MALDI-TOF</dd>
+                        <dt>Ligand–target interaction</dt>
+                        <dd>Isothermal titration calorimetry (ITC-200, Malvern MicroCal) at 25 °C</dd>
+                        <dt>Infrastructure</dt>
+                        <dd>Snakemake orchestration on a high-performance computing (HPC) environment, in Docker containers</dd>
+                        <dt>Collaborations</dt>
+                        <dd>Network in Brazil and the UK, including CRAFT Therapeutics (X-ray crystallography) and GARDP</dd>
+                    </dl>
+                </section>
+
+                <section class="section">
+                    <h2 class="section-title">Impact &amp; open science</h2>
+                    <div class="prose">
+                        <p>The project makes extensive use of well-curated public databases — the Protein Data Bank (structures), ZINC (small molecules) and GenBank (annotated genomic data). All derived data — clustered ligand libraries, descriptor <em>embeddings</em> and inferred protein–ligand associations — will be versioned and documented, and the computational workflows shared in public repositories (GitHub, Zenodo), ensuring full transparency and reproducibility.</p>
+                        <p>All results will be incorporated into <strong>AM2PMdb</strong>, an open-access database conceived as a "public hypothesis engine" for antimicrobial discovery, released under a permissive licence (CC BY or MIT). Data handling will follow the <strong>FAIR</strong> principles (Findable, Accessible, Interoperable, Reusable), and newly curated associations may be submitted back to the source databases (e.g. ChEMBL). The software modules will be registered as Intellectual Property but will remain freely available for the community to use and improve. The architecture is designed to be later adapted to different bacterial, protozoan and viral pathogens.</p>
+                    </div>
+                </section>
+            </article>
+        </div>
+
+        <!-- ====================== REFERENCES (shared) ====================== -->
+        <section class="references">
+            <h2 class="section-title" data-i18n="references_title"></h2>
+            <ol class="ref-list">
+                <li id="ref-1">Mottin M, Borba JVVB, Braga RC, Torres PHM, Martini MC, Proença-Modena JL, et al. The A–Z of Zika drug discovery. <em>Drug Discov Today</em>. 2018. <a href="https://doi.org/10.1016/j.drudis.2018.06.014" target="_blank" rel="noopener">DOI</a></li>
+                <li id="ref-2">Mottin M, Borba JVVB, Melo-Filho CC, Neves BJ, Muratov E, Torres PHM, et al. Computational drug discovery for the Zika virus. <em>Braz J Pharm Sci</em>. 2018;54(Special Issue).</li>
+                <li id="ref-3">Mottin M, Caesar LK, Brodsky D, Mesquita NCMR, de Oliveira KZ, Noske GD, et al. Chalcones from <em>Angelica keiskei</em> (ashitaba) inhibit key Zika virus replication proteins. <em>Bioorganic Chem</em>. 2022;120:105649. <a href="https://doi.org/10.1016/j.bioorg.2022.105649" target="_blank" rel="noopener">DOI</a></li>
+                <li id="ref-4">Gómez MM, de Abreu FVS, Dos Santos AAC, de Mello IS, Santos MP, Ribeiro IP, et al. Genomic and structural features of the yellow fever virus from the 2016–2017 Brazilian outbreak. <em>J Gen Virol</em>. 2018;99(4). <a href="https://doi.org/10.1099/jgv.0.001033" target="_blank" rel="noopener">DOI</a></li>
+                <li id="ref-5">Soares RO, Torres PHM, Silva ML, Pascutti PG. Unraveling HIV protease flaps dynamics by Constant pH Molecular Dynamics simulations. <em>J Struct Biol</em>. 2016;195(2):216–26. <a href="https://doi.org/10.1016/j.jsb.2016.06.006" target="_blank" rel="noopener">DOI</a></li>
+                <li id="ref-6">Martins LC, Torres PHM, de Oliveira RB, Pascutti PG, Cino EA, Ferreira RS. Investigation of the binding mode of a novel cruzain inhibitor by docking, molecular dynamics, ab initio and MM/PBSA calculations. <em>J Comput Aided Mol Des</em>. 2018;32(5):591–605. <a href="https://doi.org/10.1007/s10822-018-0112-3" target="_blank" rel="noopener">DOI</a></li>
+                <li id="ref-7">Bandeira PT, Chaves CR, Monteiro Torres PH, de Souza W. Immunolocalization and 3D modeling of three unique proteins belonging to the costa of <em>Tritrichomonas foetus</em>. <em>Parasitol Res</em>. 2025;124(3):30. <a href="https://doi.org/10.1007/s00436-025-08466-4" target="_blank" rel="noopener">DOI</a></li>
+                <li id="ref-8">de Vasconcelos e Souza A, de Faria CC, Pereira LM, Ferreira ACF, Torres PHM, Fortunato RS. Gene Expression and Prognostic Value of NADPH Oxidase Enzymes in Breast Cancer. <em>Int J Mol Sci</em>. 2024;25(6):3464. <a href="https://doi.org/10.3390/ijms25063464" target="_blank" rel="noopener">DOI</a></li>
+                <li id="ref-9">Torres PHM, Sousa GLSC, Pascutti PG. Structural analysis of the N-terminal fragment of the antiangiogenic protein endostatin: a molecular dynamics study. <em>Proteins</em>. 2011;79(9):2684–92. <a href="https://doi.org/10.1002/prot.23096" target="_blank" rel="noopener">DOI</a></li>
+                <li id="ref-10">Alsulami AF, Torres PHM, Moghul I, Arif SM, Chaplin AK, Vedithi SC, et al. COSMIC Cancer Gene Census 3D database: understanding the impacts of mutations on cancer targets. <em>Brief Bioinform</em>. 2021;22(6):bbab220. <a href="https://doi.org/10.1093/bib/bbab220" target="_blank" rel="noopener">DOI</a></li>
+                <li id="ref-11">Maryam A, Vedithi SC, Khalid RR, Alsulami AF, Torres PHM, Siddiqi AR, et al. The Molecular Organization of Human cGMP Specific Phosphodiesterase 6 (PDE6): Structural Implications of Somatic Mutations in Cancer and Retinitis Pigmentosa. <em>Comput Struct Biotechnol J</em>. 2019;17:378–89. <a href="https://doi.org/10.1016/j.csbj.2019.03.004" target="_blank" rel="noopener">DOI</a></li>
+                <li id="ref-12">Naghavi M, Vollset SE, Ikuta KS, Swetschinski LR, Gray AP, Wool EE, et al. Global burden of bacterial antimicrobial resistance 1990–2021: a systematic analysis with forecasts to 2050. <em>The Lancet</em>. 2024;404(10459):1199–226.</li>
+                <li id="ref-13">Rice LB. Federal Funding for the Study of Antimicrobial Resistance in Nosocomial Pathogens: No ESKAPE. <em>J Infect Dis</em>. 2008;197(8):1079–81.</li>
+                <li id="ref-14">Miller WR, Arias CA. ESKAPE pathogens: antimicrobial resistance, epidemiology, clinical impact and therapeutics. <em>Nat Rev Microbiol</em>. 2024;22(10):598–616.</li>
+                <li id="ref-15">Machado D, Andrejev S, Tramontano M, Patil KR. Fast automated reconstruction of genome-scale metabolic models for microbial species and communities. <em>Nucleic Acids Res</em>. 2018;46(15):7542–53.</li>
+                <li id="ref-16">Ebrahim A, Lerman JA, Palsson BO, Hyduke DR. COBRApy: COnstraints-Based Reconstruction and Analysis for Python. <em>BMC Syst Biol</em>. 2013;7(1):74.</li>
+                <li id="ref-17">Torres PHM, Rossi AD, Blundell TL. ProtCHOIR: a tool for proteome-scale generation of homo-oligomers. <em>Brief Bioinform</em>. 2021;22(6):bbab182. <a href="https://doi.org/10.1093/bib/bbab182" target="_blank" rel="noopener">DOI</a></li>
+                <li id="ref-18">Šali A, Blundell TL. Comparative Protein modelling by satisfaction of spatial restraints. <em>J Mol Biol</em>. 1993;234:779–815.</li>
+                <li id="ref-19">Dolinsky TJ, Czodrowski P, Li H, Nielsen JE, Jensen JH, Klebe G, et al. PDB2PQR: Expanding and upgrading automated preparation of biomolecular structures for molecular simulations. <em>Nucleic Acids Res</em>. 2007;35(Suppl.2):522–5.</li>
+                <li id="ref-20">Olsson MHM, Søndergaard CR, Rostkowski M, Jensen JH. PROPKA3: Consistent Treatment of Internal and Surface Residues in Empirical pKa Predictions. <em>J Chem Theory Comput</em>. 2011;7(2):525–37.</li>
+                <li id="ref-21">Le Guilloux V, Schmidtke P, Tuffery P. Fpocket: an open source platform for ligand pocket detection. <em>BMC Bioinformatics</em>. 2009;10:168.</li>
+                <li id="ref-22">Capra JA, Laskowski RA, Thornton JM, Singh M, Funkhouser TA. Predicting Protein Ligand Binding Sites by Combining Evolutionary Sequence Conservation and 3D Structure. <em>PLOS Comput Biol</em>. 2009;5(12):e1000585.</li>
+            </ol>
+        </section>
+
+        <div class="proj-footer">
+            <span data-i18n="footer_coord"></span> ·
+            <a href="index.html" data-i18n="footer_back"></a>
+        </div>
+
+    </div>
+
+    <script>
+        const I18N = {
+            pt: {
+                eyebrow: "Projeto CNPq · Chamada PQ/2025 · Bolsas de Produtividade em Pesquisa",
+                expansion: "Máquina de Prospecção Perpétua de Antimicrobianos",
+                fulltitle: "Desenvolvimento, validação e integração de métodos de biologia computacional e inteligência artificial para a prospecção de novos fármacos — Laboratório de Modelagem e Dinâmica Molecular, IBCCF/UFRJ.",
+                references_title: "Referências",
+                footer_coord: "Pedro Henrique Monteiro Torres · LMDM / IBCCF / UFRJ",
+                footer_back: "Voltar ao currículo"
+            },
+            en: {
+                eyebrow: "CNPq Project · PQ/2025 Call · Research Productivity Fellowship",
+                expansion: "Antimicrobial Machine for Perpetual Mining",
+                fulltitle: "Development, validation and integration of computational biology and artificial intelligence methods for the prospection of new drugs — Molecular Modelling and Dynamics Laboratory, IBCCF/UFRJ.",
+                references_title: "References",
+                footer_coord: "Pedro Henrique Monteiro Torres · LMDM / IBCCF / UFRJ",
+                footer_back: "Back to the CV"
+            }
+        };
+
+        function setLanguage(lang) {
+            const dict = I18N[lang] || I18N.pt;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (dict[key] !== undefined) el.textContent = dict[key];
+            });
+            ['pt', 'en'].forEach(l => {
+                document.getElementById('content-' + l).classList.remove('active');
+                document.getElementById('flag-' + l).classList.remove('active');
+            });
+            document.getElementById('content-' + lang).classList.add('active');
+            document.getElementById('flag-' + lang).classList.add('active');
+            document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en';
+            localStorage.setItem('cv-lang', lang);
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const isDark = html.getAttribute('data-theme') === 'dark';
+            const newTheme = isDark ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            document.getElementById('theme-icon').className = isDark ? 'fas fa-moon' : 'fas fa-sun';
+            localStorage.setItem('cv-theme', newTheme);
+        }
+
+        // Smooth-scroll from inline citations to the reference list
+        document.addEventListener('click', (e) => {
+            const sup = e.target.closest('sup.ref');
+            if (!sup) return;
+            const target = document.getElementById('ref-' + sup.getAttribute('data-ref'));
+            if (target) { target.scrollIntoView({ behavior: 'smooth', block: 'center' }); location.hash = 'ref-' + sup.getAttribute('data-ref'); }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('cv-theme') ||
+                (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            document.getElementById('theme-icon').className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+            const savedLang = localStorage.getItem('cv-lang') || 'pt';
+            setLanguage(savedLang);
+        });
+    </script>
+</body>
+</html>

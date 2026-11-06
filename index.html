@@ -507,8 +507,30 @@
             background: var(--accent-light);
             border: 1px solid var(--border);
             border-radius: 11px;
-            transition: background 0.3s, border-color 0.3s;
+            text-decoration: none;
+            color: var(--text);
+            transition: background 0.3s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
         }
+
+        a.project-card:hover {
+            border-color: var(--accent-vivid);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px var(--shadow);
+        }
+
+        .project-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.82em;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .project-more .arrow { transition: transform 0.2s; }
+        a.project-card:hover .project-more .arrow { transform: translateX(4px); }
 
         .project-label {
             font-size: 0.68em;
@@ -658,7 +680,7 @@
                     <span class="keyword-tag">Quimioinformática</span>
                 </div>
                 <h3 class="section-title section-gap">Projeto de Pesquisa</h3>
-                <article class="project-card">
+                <a class="project-card" href="am2pm.html">
                     <div>
                         <div class="project-label">CNPq &nbsp;·&nbsp; Chamada PQ/2025 &nbsp;·&nbsp; Bolsas de Produtividade em Pesquisa</div>
                         <h4 class="project-title">Desenvolvimento, validação e integração de métodos de biologia computacional e inteligência artificial para a prospecção de novos fármacos</h4>
@@ -692,7 +714,8 @@
                         <dt>Local</dt>
                         <dd>Laboratório de Modelagem e Dinâmica Molecular — IBCCF/UFRJ</dd>
                     </dl>
-                </article>
+                    <span class="project-more">Ver projeto completo <i class="fas fa-arrow-right arrow"></i></span>
+                </a>
                 <h3 class="section-title section-gap">Prêmios e Títulos</h3>
                 <ul class="awards-list">
                     <li>Jovem Cientista do Nosso Estado, FAPERJ (2023)</li>
@@ -896,7 +919,7 @@
                     <span class="keyword-tag">Chemoinformatics</span>
                 </div>
                 <h3 class="section-title section-gap">Research Project</h3>
-                <article class="project-card">
+                <a class="project-card" href="am2pm.html">
                     <div>
                         <div class="project-label">CNPq &nbsp;·&nbsp; PQ/2025 Call &nbsp;·&nbsp; Research Productivity Fellowship</div>
                         <h4 class="project-title">Development, validation and integration of computational biology and artificial intelligence methods for the prospection of new drugs</h4>
@@ -930,7 +953,8 @@
                         <dt>Venue</dt>
                         <dd>Molecular Modelling and Dynamics Laboratory — IBCCF/UFRJ</dd>
                     </dl>
-                </article>
+                    <span class="project-more">View full project <i class="fas fa-arrow-right arrow"></i></span>
+                </a>
                 <h3 class="section-title section-gap">Awards &amp; Honours</h3>
                 <ul class="awards-list">
                     <li>Young Scientist of Our State, FAPERJ (2023)</li>
