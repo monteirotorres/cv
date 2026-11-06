@@ -340,6 +340,36 @@
             color: var(--text-light);
         }
 
+        .module-foot {
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px solid var(--border);
+        }
+
+        .module-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.78em;
+            font-weight: 600;
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .module-link:hover { text-decoration: underline; }
+
+        .module-wip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.72em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-light);
+            opacity: 0.8;
+        }
+
         /* ===== RESULT CARDS ===== */
         .result-stats {
             display: grid;
@@ -506,26 +536,32 @@
                         <div class="module">
                             <div class="module-name">TARDIS</div>
                             <div class="module-role">Recebe um genoma ou proteoma, gera modelos metabólicos com CarveMe<sup class="ref" data-ref="15">15</sup> e simula o crescimento <em>in silico</em> por Análise de Balanço de Fluxo (FBA) em COBRApy<sup class="ref" data-ref="16">16</sup>. Prioriza alvos por essencialidade, participação em reações de gargalo e ausência de similaridade com proteínas humanas.</div>
+                            <div class="module-foot"><span class="module-wip"><i class="fas fa-flask"></i> Em desenvolvimento</span></div>
                         </div>
                         <div class="module">
                             <div class="module-name">ProtCHOIR</div>
                             <div class="module-role">Constrói modelos 3D por modelagem comparativa usando moldes do PDB e o MODELLER<sup class="ref" data-ref="18">18</sup>, com relatório de confiabilidade<sup class="ref" data-ref="17">17</sup>.</div>
+                            <div class="module-foot"><a class="module-link" href="https://github.com/monteirotorres/ProtCHOIR" target="_blank" rel="noopener"><i class="fab fa-github"></i> monteirotorres/ProtCHOIR</a></div>
                         </div>
                         <div class="module">
                             <div class="module-name">SPADA</div>
                             <div class="module-role">Refina estruturas e incorpora flexibilidade: preparação do sistema (VMD/PDB2PQR<sup class="ref" data-ref="19">19</sup>), solvatação, íons e estados de protonação (PROPKA<sup class="ref" data-ref="20">20</sup>).</div>
+                            <div class="module-foot"><span class="module-wip"><i class="fas fa-flask"></i> Em desenvolvimento</span></div>
                         </div>
                         <div class="module">
                             <div class="module-name">HocusPockets</div>
                             <div class="module-role">Identifica e pontua cavidades drogáveis com Fpocket<sup class="ref" data-ref="21">21</sup> e ConCavity<sup class="ref" data-ref="22">22</sup>, agregando descritores quânticos (HOMO/LUMO) para sugerir sítios catalíticos.</div>
+                            <div class="module-foot"><span class="module-wip"><i class="fas fa-flask"></i> Em desenvolvimento</span></div>
                         </div>
                         <div class="module">
                             <div class="module-name">Liggdrasil</div>
                             <div class="module-role">Pré-processamento, curadoria e clusterização hierárquica das bases de dados de ligantes, baseada em aprendizado de máquina.</div>
+                            <div class="module-foot"><span class="module-wip"><i class="fas fa-flask"></i> Em desenvolvimento</span></div>
                         </div>
                         <div class="module">
                             <div class="module-name">OCDocker</div>
                             <div class="module-role">Docking por consenso: seleciona a pose mais representativa, reavalia com funções de pontuação e gera um score final por aprendizado de máquina, produzindo rankings de ligantes.</div>
+                            <div class="module-foot"><span class="module-wip"><i class="fas fa-flask"></i> Em desenvolvimento</span></div>
                         </div>
                     </div>
                 </section>
@@ -613,26 +649,32 @@
                         <div class="module">
                             <div class="module-name">TARDIS</div>
                             <div class="module-role">Takes a genome or proteome, builds metabolic models with CarveMe<sup class="ref" data-ref="15">15</sup> and simulates growth <em>in silico</em> via Flux Balance Analysis (FBA) in COBRApy<sup class="ref" data-ref="16">16</sup>. Targets are prioritised by essentiality, participation in bottleneck reactions and absence of similarity to human proteins.</div>
+                            <div class="module-foot"><span class="module-wip"><i class="fas fa-flask"></i> In development</span></div>
                         </div>
                         <div class="module">
                             <div class="module-name">ProtCHOIR</div>
                             <div class="module-role">Builds 3D models by comparative modelling using PDB templates and MODELLER<sup class="ref" data-ref="18">18</sup>, with a reliability report<sup class="ref" data-ref="17">17</sup>.</div>
+                            <div class="module-foot"><a class="module-link" href="https://github.com/monteirotorres/ProtCHOIR" target="_blank" rel="noopener"><i class="fab fa-github"></i> monteirotorres/ProtCHOIR</a></div>
                         </div>
                         <div class="module">
                             <div class="module-name">SPADA</div>
                             <div class="module-role">Refines structures and adds flexibility: system preparation (VMD/PDB2PQR<sup class="ref" data-ref="19">19</sup>), solvation, ions and protonation states (PROPKA<sup class="ref" data-ref="20">20</sup>).</div>
+                            <div class="module-foot"><span class="module-wip"><i class="fas fa-flask"></i> In development</span></div>
                         </div>
                         <div class="module">
                             <div class="module-name">HocusPockets</div>
                             <div class="module-role">Identifies and scores druggable pockets with Fpocket<sup class="ref" data-ref="21">21</sup> and ConCavity<sup class="ref" data-ref="22">22</sup>, adding quantum descriptors (HOMO/LUMO) to suggest catalytic sites.</div>
+                            <div class="module-foot"><span class="module-wip"><i class="fas fa-flask"></i> In development</span></div>
                         </div>
                         <div class="module">
                             <div class="module-name">Liggdrasil</div>
                             <div class="module-role">Pre-processing, curation and hierarchical clustering of ligand databases, based on machine learning.</div>
+                            <div class="module-foot"><span class="module-wip"><i class="fas fa-flask"></i> In development</span></div>
                         </div>
                         <div class="module">
                             <div class="module-name">OCDocker</div>
                             <div class="module-role">Consensus docking: selects the most representative pose, re-scores with scoring functions and produces a final machine-learning score, yielding ligand rankings.</div>
+                            <div class="module-foot"><span class="module-wip"><i class="fas fa-flask"></i> In development</span></div>
                         </div>
                     </div>
                 </section>
